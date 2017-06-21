@@ -5,6 +5,7 @@ import (
 	"archive/zip"
 	"io/ioutil"
 	"errors"
+	"fmt"
 )
 
 type ZipEntry struct {
@@ -12,6 +13,7 @@ type ZipEntry struct {
 }
 
 func (self *ZipEntry) readClass(className string) ([]byte, Entry, error) {
+	fmt.Println("------------------" + self.absPath)
 	//打开压缩文件,错误直接返回
 	r, err := zip.OpenReader(self.absPath)
 	if err != nil {
@@ -44,5 +46,5 @@ func newZipEntry(path string) *ZipEntry {
 	if err != nil {
 		panic(err)
 	}
-	return &ZipEntry{absPath:absPath}
+	return &ZipEntry{absPath}
 }

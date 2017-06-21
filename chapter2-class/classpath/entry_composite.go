@@ -28,7 +28,7 @@ func (self CompositeEntry) String() string {
 	return strings.Join(strs, pathListSeparator)
 }
 
-func newCompositeEntry(path string) *CompositeEntry {
+func newCompositeEntry(path string) CompositeEntry {
 	compositeEntry := []Entry{}
 	for _, path := range strings.Split(path, pathListSeparator) {
 		entry := newEntry(path)

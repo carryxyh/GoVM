@@ -1,9 +1,11 @@
-package chapter1_main
+package main
 
 import (
 	"flag"
 	"fmt"
 	"os"
+	"GoVM/chapter2-class/classpath"
+	"strings"
 )
 
 type Cmd struct {
@@ -22,7 +24,6 @@ type Cmd struct {
 func parseCmd() *Cmd {
 	cmd := &Cmd{}
 	flag.Usage = printUsage
-	fmt.Printf("%s    ", &cmd.helpFlag)
 	flag.BoolVar(&cmd.helpFlag, "help", false, "print help message")
 	flag.BoolVar(&cmd.helpFlag, "?", false, "print help message")
 	flag.BoolVar(&cmd.versionFlag, "version", false, "version info")
@@ -36,7 +37,6 @@ func parseCmd() *Cmd {
 		cmd.class = args[0]
 		cmd.args = args[1:]
 	}
-
 	return cmd
 }
 
@@ -56,5 +56,14 @@ func main() {
 }
 
 func startJVM(cmd *Cmd) {
-	fmt.Printf("classpath:%s class:%s args:%v \n", cmd.cpOption, cmd.class, cmd.args)
+	cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
+	fmt.Printf("classpath: %+v class: %v args:%v  \n", cp, cmd.class, cmd.args)
+	className := strings.Replace(cmd.class, ".", "/", -1)
+	classData, _, err := cp.ReadClass(className)
+	if err != nil {
+		fmt.Printf("Could not find or load main class %s \n", cmd.class)
+		return
+	}
+
+	fmt.Printf("class data:%v  \n", classData)
 }
