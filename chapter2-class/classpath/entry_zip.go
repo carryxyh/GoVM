@@ -4,6 +4,7 @@ import (
 	"path/filepath"
 	"archive/zip"
 	"io/ioutil"
+	"errors"
 )
 
 type ZipEntry struct {
@@ -31,11 +32,11 @@ func (self *ZipEntry) readClass(className string) ([]byte, Entry, error) {
 		}
 		return data, self, err
 	}
-	return nil, nil, nil
+	return nil, nil, errors.New("class not found: " + className)
 }
 
 func (self *ZipEntry) String() string {
-	return nil
+	return self.absPath
 }
 
 func newZipEntry(path string) *ZipEntry {
