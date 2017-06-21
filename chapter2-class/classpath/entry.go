@@ -21,7 +21,7 @@ type Entry interface {
  */
 func newEntry(path string) Entry {
 	if strings.Contains(path, pathListSeparator) {
-		return newDirEntry(path)
+		return newCompositeEntry(path)
 	}
 	if strings.HasSuffix(path, "*") {
 		return newWildCardEntry(path)
