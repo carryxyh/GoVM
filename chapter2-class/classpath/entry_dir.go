@@ -18,7 +18,9 @@ func newDirEntry(path string) *DirEntry {
 }
 
 func (self *DirEntry) readClass(className string) ([]byte, Entry, error) {
+	//把class名加入到路径的后面
 	fileName := filepath.Join(self.absDir, className)
+	//从文件中读取数据
 	data, err := ioutil.ReadFile(fileName)
 	return data, self, err
 }
