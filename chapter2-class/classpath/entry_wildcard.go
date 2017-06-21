@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func newWildCardEntry(path string) CompositeEntry {
+func newWildcardEntry(path string) CompositeEntry {
 	baseDir := path[:len(path) - 1] // remove *
 	compositeEntry := []Entry{}
 

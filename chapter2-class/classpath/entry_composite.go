@@ -6,7 +6,7 @@ import (
 )
 
 /**
-	这是很多entry的集合，符合entry
+	这是很多entry的集合，复合entry
  */
 type CompositeEntry []Entry
 

@@ -19,22 +19,18 @@ func Parse(jreOption, cpOption string) *Classpath {
 }
 
 /**
-	依次从启动类路径、扩展类路径和用户类路径中搜索class文件
+	加载BootClass和ExtClass
  */
-func (this *Classpath) ReadClass(className string) ([]byte, Entry, error) {
-	className = className + ".class"
-	if data, entry, err := this.bootClasspath.readClass(className); err == nil {
-		return data, entry, err
-	}
+func (self *Classpath) parseBootAndExtClasspath(jreOption string) {
+	jreDir := getJreDir(jreOption)
 
-	if data, entry, err := this.extClasspath.readClass(className); err == nil {
-		return data, entry, err
-	}
-	return this.userClasspath.readClass(className)
-}
+	//jre/lib/*
+	jreLibPath := filepath.Join(jreDir, "lib", "*")
+	self.bootClasspath = newWildcardEntry(jreLibPath)
 
-func (self *Classpath) String() string {
-	return self.userClasspath.String()
+	//jre/lib/ext/*
+	jreExtPath := filepath.Join(jreDir, "lib", "ext", "*")
+	self.extClasspath = newWildcardEntry(jreExtPath)
 }
 
 /**
@@ -45,21 +41,6 @@ func (self *Classpath) parseUserClasspath(cpOption string) {
 		cpOption = "."
 	}
 	self.userClasspath = newEntry(cpOption)
-}
-
-/**
-	加载BootClass和ExtClass
- */
-func (self *Classpath) parseBootAndExtClasspath(jreOption string) {
-	jreDir := getJreDir(jreOption)
-
-	//jre/lib/*
-	jreLibPath := filepath.Join(jreDir, "lib", "*")
-	self.bootClasspath = newWildCardEntry(jreLibPath)
-
-	//jre/lib/ext/*
-	jreExtPath := filepath.Join(jreDir, "lib", "ext", "*")
-	self.extClasspath = newWildCardEntry(jreExtPath)
 }
 
 /**
@@ -76,6 +57,25 @@ func getJreDir(jreOption string) string {
 		return filepath.Join(jh, "jre")
 	}
 	panic("Can not find jre folder!")
+}
+
+/**
+	依次从启动类路径、扩展类路径和用户类路径中搜索class文件
+ */
+func (self *Classpath) ReadClass(className string) ([]byte, Entry, error) {
+	className = className + ".class"
+	if data, entry, err := self.bootClasspath.readClass(className); err == nil {
+		return data, entry, err
+	}
+
+	if data, entry, err := self.extClasspath.readClass(className); err == nil {
+		return data, entry, err
+	}
+	return self.userClasspath.readClass(className)
+}
+
+func (self *Classpath) String() string {
+	return self.userClasspath.String()
 }
 
 /**
