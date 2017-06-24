@@ -20,3 +20,10 @@ type ConstantFloatInfo struct {
 type ConstantLongInfo struct {
 
 }
+
+/**
+	常量池中double
+ */
+type ConstantDoubleInfo struct {
+
+}
