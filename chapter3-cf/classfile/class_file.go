@@ -46,6 +46,9 @@ func (this *ClassFile) read(reader *ClassReader) {
 	this.attributes = readAttributes(reader, this.constantPool)
 }
 
+/**
+	检查魔数
+ */
 func (this *ClassFile) readAndCheckMagic(reader *ClassReader) {
 	magic := reader.readUint32()
 	if magic != 0xCAFEBABE {
@@ -53,6 +56,9 @@ func (this *ClassFile) readAndCheckMagic(reader *ClassReader) {
 	}
 }
 
+/**
+	检查字节码版本
+ */
 func (this *ClassFile) readAndCheckVersion(reader *ClassReader) {
 	this.minorVersion = reader.readUint16()
 	this.majorVersion = reader.readUint16()
