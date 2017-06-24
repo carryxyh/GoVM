@@ -51,12 +51,14 @@ func (self ConstantPool) getNameAndType(index uint16) (string, string) {
 	获取class name
  */
 func (self ConstantPool) getClassName(index uint16) string {
-	return ""
+	classInfo := self.getConstantInfo(index).(*ConstantInfo)
+	return self.getUtf8(classInfo.nameIndex)
 }
 
 /**
 	从常量池获取utf8编码的string
  */
 func (self ConstantPool) getUtf8(index uint16) string {
-	return nil;
+	utf8Info := self.getConstantInfo(index).(*ConstantUtf8Info)
+	return utf8Info.str
 }
