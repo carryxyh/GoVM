@@ -51,7 +51,7 @@ func (self ConstantPool) getNameAndType(index uint16) (string, string) {
 	获取class name
  */
 func (self ConstantPool) getClassName(index uint16) string {
-	classInfo := self.getConstantInfo(index).(*ConstantInfo)
+	classInfo := self.getConstantInfo(index).(*ConstantClassInfo)
 	return self.getUtf8(classInfo.nameIndex)
 }
 
