@@ -1,5 +1,13 @@
 package chapter3_cf
 
+/**
+	常量池中主要存放两大类常量：字面量和符号引用
+	字面量比较接近于 Java 层面的常量概念，如文本字符串、被声明为 final 的常量值等
+	符号引用总结起来则包括了下面三类常量:
+		1.类和接口的全限定名（即带有包名的 Class 名，如：org.lxh.test.TestClass）
+		2.字段的名称和描述符（private、static 等描述符）
+		3.方法的名称和描述符（private、static 等描述符）
+ */
 type ConstantPool []ConstantInfo
 
 /**

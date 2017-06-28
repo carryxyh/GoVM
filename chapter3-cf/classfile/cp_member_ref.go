@@ -1,5 +1,17 @@
 package chapter3_cf
 
+
+/**
+	ConstantFieldrefInfo、ConstantMethodrefInfo、ConstantInterfaceMethodrefInfo
+	这三个结构体继承自ConstantMemberrefInfo
+	Go语言没有“继承”的概念，而是通过结构体嵌套的方式实现的
+ */
+type ConstantMemberrefInfo struct {
+	cp               ConstantPool
+	classIndex       uint16
+	nameAndTypeIndex uint16
+}
+
 /**
 	字段符号引用
 	CONSTANT_FIELDREF_INFO {
@@ -34,17 +46,6 @@ type ConstantMethodrefInfo struct {
  */
 type ConstantInterfaceMethodrefInfo struct {
 	ConstantMemberrefInfo
-}
-
-/**
-	ConstantFieldrefInfo、ConstantMethodrefInfo、ConstantInterfaceMethodrefInfo
-	这三个结构体继承自ConstantMemberrefInfo
-	Go语言没有“继承”的概念，而是通过结构体嵌套的方式实现的
- */
-type ConstantMemberrefInfo struct {
-	cp               ConstantPool
-	classIndex       uint16
-	nameAndTypeIndex uint16
 }
 
 func (self *ConstantMemberrefInfo) readInfo(reader *ClassReader) {
