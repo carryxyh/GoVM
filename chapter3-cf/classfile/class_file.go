@@ -5,7 +5,7 @@ import "fmt"
 type ClassFile struct {
 	//魔数 class的魔术 -> 0xCAFEBABE
 	magic        uint32
-	minorVersion uint32
+	minorVersion uint16
 	majorVersion uint16
 	constantPool ConstantPool
 	accessFlags  uint16
@@ -89,7 +89,7 @@ func (this *ClassFile) ConstantPool() ConstantPool {
 }
 
 func (this *ClassFile) AccessFlags() uint16 {
-	this.accessFlags
+	return this.accessFlags
 }
 
 func (this *ClassFile) Fields() []*MemberInfo {
