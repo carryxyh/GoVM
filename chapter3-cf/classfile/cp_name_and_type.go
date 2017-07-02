@@ -35,4 +35,6 @@ func (self *ConstantNameAndTypeInfo) readInfo(reader *ClassReader) {
 
 	(2)字段描述符就是字段类型的描述符
 	(3)方法描述符是 （分号分割的参数类型描述符） + 返回值类型描述符，void返回值由单个字母V表示
+
+	紫苑注：boolean的基本类型应该是Z
  */
