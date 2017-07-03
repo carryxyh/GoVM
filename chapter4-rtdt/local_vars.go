@@ -16,7 +16,7 @@ func newLocalVars(maxLocals uint) LocalVars {
 	return nil
 }
 
-func (self LocalVars) SetInt(index uint, val uint32) {
+func (self LocalVars) SetInt(index uint, val int32) {
 	self[index].num = val
 }
 
@@ -50,7 +50,7 @@ func (self LocalVars) GetLong(index uint) int64 {
 //DOUBLE类型可以先转成LONG，然后按照LONG变量来处理
 func (self LocalVars) SetDouble(index uint, val float64) {
 	bits := math.Float64bits(val)
-	self.SetLong(index, uint64(bits))
+	self.SetLong(index, int64(bits))
 }
 
 func (self LocalVars) GetDouble(index uint) float64 {
