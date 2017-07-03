@@ -57,10 +57,12 @@ func main() {
 }
 
 func startJVM(cmd *Cmd) {
+	//第四节测试代码
 	frame := chapter4_rtdt.NewFrame(100, 100)
 	testLocals(frame.LocalVars())
 	testOperandStack(frame.OperandStack())
 
+	//第三节测试代码
 	//cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
 	//className := strings.Replace(cmd.class, ".", "/", -1)
 	//
@@ -68,6 +70,7 @@ func startJVM(cmd *Cmd) {
 	//fmt.Println(cmd.class)
 	//printClassInfo(cf)
 
+	//第二节测试代码
 	//classData, _, err := cp.ReadClass(className)
 	//if err != nil {
 	//	fmt.Printf("Could not find or load main class %s \n", cmd.class)
