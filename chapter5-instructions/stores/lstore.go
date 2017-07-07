@@ -29,7 +29,7 @@ type LSTORE_1 struct {
 }
 
 func (self *LSTORE_1) Execute(frame *chapter4_rtdt.Frame) {
-	_lstore(frame, 0)
+	_lstore(frame, 1)
 }
 
 type LSTORE_2 struct {
@@ -37,7 +37,7 @@ type LSTORE_2 struct {
 }
 
 func (self *LSTORE_2) Execute(frame *chapter4_rtdt.Frame) {
-	_lstore(frame, 0)
+	_lstore(frame, 2)
 }
 
 type LSTORE_3 struct {
@@ -45,7 +45,7 @@ type LSTORE_3 struct {
 }
 
 func (self *LSTORE_3) Execute(frame *chapter4_rtdt.Frame) {
-	_lstore(frame, 0)
+	_lstore(frame, 3)
 }
 
 func _lstore(frame *chapter4_rtdt.Frame, index uint) {

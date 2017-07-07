@@ -29,7 +29,7 @@ type ISTORE_1 struct {
 }
 
 func (self *ISTORE_1) Execute(frame *chapter4_rtdt.Frame) {
-	_istore(frame, 0)
+	_istore(frame, 1)
 }
 
 type ISTORE_2 struct {
@@ -37,7 +37,7 @@ type ISTORE_2 struct {
 }
 
 func (self *ISTORE_2) Execute(frame *chapter4_rtdt.Frame) {
-	_istore(frame, 0)
+	_istore(frame, 2)
 }
 
 type ISTORE_3 struct {
@@ -45,7 +45,7 @@ type ISTORE_3 struct {
 }
 
 func (self *ISTORE_3) Execute(frame *chapter4_rtdt.Frame) {
-	_istore(frame, 0)
+	_istore(frame, 3)
 }
 
 func _istore(frame *chapter4_rtdt.Frame, index uint) {
