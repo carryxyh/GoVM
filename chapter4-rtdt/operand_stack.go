@@ -2,7 +2,7 @@ package chapter4_rtdt
 
 import "math"
 
-//这也是一个栈结构
+//这也是一个栈结构，操作数栈
 type OperandStack struct {
 	//用于记录栈顶位置
 	size  uint
