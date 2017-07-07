@@ -2,6 +2,9 @@ package base
 
 import "GoVM/chapter4-rtdt"
 
+/**
+	操作码后面可以跟零字节或多字节的操作数，操作数就相当于函数的参数
+ */
 type Instructions interface {
 	//从字节码中提取操作数
 	FetchOperands(reader *BytecodeReader)
@@ -9,6 +12,9 @@ type Instructions interface {
 	Execute(frame *chapter4_rtdt.Frame)
 }
 
+/**
+	没有操作数的指令，及没有参数的指令
+ */
 type NoOperandsInstruction struct {
 
 }
@@ -44,7 +50,7 @@ type Index8Instruction struct {
 }
 
 func (self *Index8Instruction) FetchOperands(reader *BytecodeReader) {
-	self.Index = uint(reader.ReadUint8())
+	self.Index = uint(reader.ReadUInt8())
 }
 
 /**
@@ -56,5 +62,5 @@ type Index16Instruction struct {
 }
 
 func (self *Index16Instruction) FetchOperands(reader *BytecodeReader) {
-	self.Index = uint(reader.ReadUint16())
+	self.Index = uint(reader.ReadUInt16())
 }
