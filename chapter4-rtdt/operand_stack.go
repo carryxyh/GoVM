@@ -79,3 +79,14 @@ func (self *OperandStack) PopRef() *Object {
 	self.slots[self.size].ref = nil // 把引用设置为nil -> 帮助Go回收结构体实例
 	return ref
 }
+
+//Slot
+func (self *OperandStack) PushSlot(slot Slot) {
+	self.slots[self.size] = slot
+	self.size++
+}
+
+func (self *OperandStack) PopSlot(slot Slot) Slot {
+	self.size--
+	return self.slots[self.size]
+}
