@@ -8,47 +8,47 @@ import (
 	"GoVM/chapter4-rtdt"
 )
 
-type LSTORE struct {
+type DSTORE struct {
 	base.Index8Instruction
 }
 
-func (self *LSTORE) Execute(frame *chapter4_rtdt.Frame) {
-	_lstore(frame, self.Index)
+func (self *DSTORE) Execute(frame *chapter4_rtdt.Frame) {
+	_dstore(frame, self.Index)
 }
 
-type LSTORE_0 struct {
+type DSTORE_0 struct {
 	base.NoOperandsInstruction
 }
 
-func (self *LSTORE_0) Execute(frame *chapter4_rtdt.Frame) {
-	_lstore(frame, 0)
+func (self *DSTORE_0) Execute(frame *chapter4_rtdt.Frame) {
+	_dstore(frame, 0)
 }
 
-type LSTORE_1 struct {
+type DSTORE_1 struct {
 	base.NoOperandsInstruction
 }
 
-func (self *LSTORE_1) Execute(frame *chapter4_rtdt.Frame) {
-	_lstore(frame, 0)
+func (self *DSTORE_1) Execute(frame *chapter4_rtdt.Frame) {
+	_dstore(frame, 0)
 }
 
-type LSTORE_2 struct {
+type DSTORE_2 struct {
 	base.NoOperandsInstruction
 }
 
-func (self *LSTORE_2) Execute(frame *chapter4_rtdt.Frame) {
-	_lstore(frame, 0)
+func (self *DSTORE_2) Execute(frame *chapter4_rtdt.Frame) {
+	_dstore(frame, 0)
 }
 
-type LSTORE_3 struct {
+type DSTORE_3 struct {
 	base.NoOperandsInstruction
 }
 
-func (self *LSTORE_3) Execute(frame *chapter4_rtdt.Frame) {
-	_lstore(frame, 0)
+func (self *DSTORE_3) Execute(frame *chapter4_rtdt.Frame) {
+	_dstore(frame, 0)
 }
 
-func _lstore(frame *chapter4_rtdt.Frame, index uint) {
-	val := frame.OperandStack().PopLong()
-	frame.LocalVars().SetLong(index, val)
+func _dstore(frame *chapter4_rtdt.Frame, index uint) {
+	val := frame.OperandStack().PopDouble()
+	frame.LocalVars().SetDouble(index, val)
 }
