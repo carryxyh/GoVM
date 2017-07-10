@@ -3,7 +3,7 @@ package base
 import "GoVM/chapter4-rtdt"
 
 func Branch(frame *chapter4_rtdt.Frame, offset int) {
-	pc := frame.Thread().pc()
+	pc := frame.Thread().PC()
 	nextPC := pc + offset
-	frame.setNextPC(nextPC)
+	frame.SetNextPC(nextPC)
 }

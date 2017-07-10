@@ -42,3 +42,17 @@ func (self *BytecodeReader) ReadInt32() int32 {
 	b4 := int32(self.ReadUInt8())
 	return (b1 << 24) | (b2 << 16) | (b3 << 8) | b4
 }
+
+func (self *BytecodeReader) SkipPadding() {
+	for self.pc % 4 != 0 {
+		self.ReadUInt8()
+	}
+}
+
+func (self *BytecodeReader) ReadInt32s(len int32) []int32 {
+	ints := make([]int32, len)
+	for i := range ints {
+		ints[i] = self.ReadInt32()
+	}
+	return ints
+}
