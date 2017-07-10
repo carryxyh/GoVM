@@ -7,6 +7,11 @@ import (
 	"GoVM/chapter5-instructions/loads"
 	"GoVM/chapter5-instructions/stores"
 	"GoVM/chapter5-instructions/stack"
+	"GoVM/chapter5-instructions/math"
+	"GoVM/chapter5-instructions/conversions"
+	"GoVM/chapter5-instructions/comparisons"
+	"GoVM/chapter5-instructions/control"
+	"GoVM/chapter5-instructions/extended"
 )
 
 // NoOperandsInstruction singletons
@@ -92,62 +97,62 @@ var (
 	dup2_x1 = &stack.DUP2_X1{}
 	dup2_x2 = &stack.DUP2_X2{}
 	swap    = &stack.SWAP{}
-	iadd    = &IADD{}
-	ladd    = &LADD{}
-	fadd    = &FADD{}
-	dadd    = &DADD{}
-	isub    = &ISUB{}
-	lsub    = &LSUB{}
-	fsub    = &FSUB{}
-	dsub    = &DSUB{}
-	imul    = &IMUL{}
-	lmul    = &LMUL{}
-	fmul    = &FMUL{}
-	dmul    = &DMUL{}
-	idiv    = &IDIV{}
-	ldiv    = &LDIV{}
-	fdiv    = &FDIV{}
-	ddiv    = &DDIV{}
-	irem    = &IREM{}
-	lrem    = &LREM{}
-	frem    = &FREM{}
-	drem    = &DREM{}
-	ineg    = &INEG{}
-	lneg    = &LNEG{}
-	fneg    = &FNEG{}
-	dneg    = &DNEG{}
-	ishl    = &ISHL{}
-	lshl    = &LSHL{}
-	ishr    = &ISHR{}
-	lshr    = &LSHR{}
-	iushr   = &IUSHR{}
-	lushr   = &LUSHR{}
-	iand    = &IAND{}
-	land    = &LAND{}
-	ior     = &IOR{}
-	lor     = &LOR{}
-	ixor    = &IXOR{}
-	lxor    = &LXOR{}
-	i2l     = &I2L{}
-	i2f     = &I2F{}
-	i2d     = &I2D{}
-	l2i     = &L2I{}
-	l2f     = &L2F{}
-	l2d     = &L2D{}
-	f2i     = &F2I{}
-	f2l     = &F2L{}
-	f2d     = &F2D{}
-	d2i     = &D2I{}
-	d2l     = &D2L{}
-	d2f     = &D2F{}
-	i2b     = &I2B{}
-	i2c     = &I2C{}
-	i2s     = &I2S{}
-	lcmp    = &LCMP{}
-	fcmpl   = &FCMPL{}
-	fcmpg   = &FCMPG{}
-	dcmpl   = &DCMPL{}
-	dcmpg   = &DCMPG{}
+	iadd    = &math.IADD{}
+	ladd    = &math.LADD{}
+	fadd    = &math.FADD{}
+	dadd    = &math.DADD{}
+	isub    = &math.ISUB{}
+	lsub    = &math.LSUB{}
+	fsub    = &math.FSUB{}
+	dsub    = &math.DSUB{}
+	imul    = &math.IMUL{}
+	lmul    = &math.LMUL{}
+	fmul    = &math.FMUL{}
+	dmul    = &math.DMUL{}
+	idiv    = &math.IDIV{}
+	ldiv    = &math.LDIV{}
+	fdiv    = &math.FDIV{}
+	ddiv    = &math.DDIV{}
+	irem    = &math.IREM{}
+	lrem    = &math.LREM{}
+	frem    = &math.FREM{}
+	drem    = &math.DREM{}
+	ineg    = &math.INEG{}
+	lneg    = &math.LNEG{}
+	fneg    = &math.FNEG{}
+	dneg    = &math.DNEG{}
+	ishl    = &math.ISHL{}
+	lshl    = &math.LSHL{}
+	ishr    = &math.ISHR{}
+	lshr    = &math.LSHR{}
+	iushr   = &math.IUSHR{}
+	lushr   = &math.LUSHR{}
+	iand    = &math.IAND{}
+	land    = &math.LAND{}
+	ior     = &math.IOR{}
+	lor     = &math.LOR{}
+	ixor    = &math.IXOR{}
+	lxor    = &math.LXOR{}
+	i2l     = &conversions.I2L{}
+	i2f     = &conversions.I2F{}
+	i2d     = &conversions.I2D{}
+	l2i     = &conversions.L2I{}
+	l2f     = &conversions.L2F{}
+	l2d     = &conversions.L2D{}
+	f2i     = &conversions.F2I{}
+	f2l     = &conversions.F2L{}
+	f2d     = &conversions.F2D{}
+	d2i     = &conversions.D2I{}
+	d2l     = &conversions.D2L{}
+	d2f     = &conversions.D2F{}
+	i2b     = &conversions.I2B{}
+	i2c     = &conversions.I2C{}
+	i2s     = &conversions.I2S{}
+	lcmp    = &comparisons.LCMP{}
+	fcmpl   = &comparisons.FCMPL{}
+	fcmpg   = &comparisons.FCMPG{}
+	dcmpl   = &comparisons.DCMPL{}
+	dcmpg   = &comparisons.DCMPG{}
 	// ireturn = &IRETURN{}
 	// lreturn = &LRETURN{}
 	// freturn = &FRETURN{}
@@ -196,9 +201,9 @@ func NewInstruction(opcode byte) base.Instruction {
 	case 0x0f:
 		return dconst_1
 	case 0x10:
-		return &BIPUSH{}
+		return &constants.BIPUSH{}
 	case 0x11:
-		return &SIPUSH{}
+		return &constants.SIPUSH{}
 	// case 0x12:
 	// 	return &LDC{}
 	// case 0x13:
@@ -206,15 +211,15 @@ func NewInstruction(opcode byte) base.Instruction {
 	// case 0x14:
 	// 	return &LDC2_W{}
 	case 0x15:
-		return &ILOAD{}
+		return &loads.ILOAD{}
 	case 0x16:
-		return &LLOAD{}
+		return &loads.LLOAD{}
 	case 0x17:
-		return &FLOAD{}
+		return &loads.FLOAD{}
 	case 0x18:
-		return &DLOAD{}
+		return &loads.DLOAD{}
 	case 0x19:
-		return &ALOAD{}
+		return &loads.ALOAD{}
 	case 0x1a:
 		return iload_0
 	case 0x1b:
@@ -272,15 +277,15 @@ func NewInstruction(opcode byte) base.Instruction {
 	// case 0x35:
 	// 	return saload
 	case 0x36:
-		return &ISTORE{}
+		return &stores.ISTORE{}
 	case 0x37:
-		return &LSTORE{}
+		return &stores.LSTORE{}
 	case 0x38:
-		return &FSTORE{}
+		return &stores.FSTORE{}
 	case 0x39:
-		return &DSTORE{}
+		return &stores.DSTORE{}
 	case 0x3a:
-		return &ASTORE{}
+		return &stores.ASTORE{}
 	case 0x3b:
 		return istore_0
 	case 0x3c:
@@ -428,7 +433,7 @@ func NewInstruction(opcode byte) base.Instruction {
 	case 0x83:
 		return lxor
 	case 0x84:
-		return &IINC{}
+		return &math.IINC{}
 	case 0x85:
 		return i2l
 	case 0x86:
@@ -470,43 +475,43 @@ func NewInstruction(opcode byte) base.Instruction {
 	case 0x98:
 		return dcmpg
 	case 0x99:
-		return &IFEQ{}
+		return &comparisons.IFEQ{}
 	case 0x9a:
-		return &IFNE{}
+		return &comparisons.IFNE{}
 	case 0x9b:
-		return &IFLT{}
+		return &comparisons.IFLT{}
 	case 0x9c:
-		return &IFGE{}
+		return &comparisons.IFGE{}
 	case 0x9d:
-		return &IFGT{}
+		return &comparisons.IFGT{}
 	case 0x9e:
-		return &IFLE{}
+		return &comparisons.IFLE{}
 	case 0x9f:
-		return &IF_ICMPEQ{}
+		return &comparisons.IF_ICMPEQ{}
 	case 0xa0:
-		return &IF_ICMPNE{}
+		return &comparisons.IF_ICMPNE{}
 	case 0xa1:
-		return &IF_ICMPLT{}
+		return &comparisons.IF_ICMPLT{}
 	case 0xa2:
-		return &IF_ICMPGE{}
+		return &comparisons.IF_ICMPGE{}
 	case 0xa3:
-		return &IF_ICMPGT{}
+		return &comparisons.IF_ICMPGT{}
 	case 0xa4:
-		return &IF_ICMPLE{}
+		return &comparisons.IF_ICMPLE{}
 	case 0xa5:
-		return &IF_ACMPEQ{}
+		return &comparisons.IF_ACMPEQ{}
 	case 0xa6:
-		return &IF_ACMPNE{}
+		return &comparisons.IF_ACMPNE{}
 	case 0xa7:
-		return &GOTO{}
+		return &control.GOTO{}
 	// case 0xa8:
 	// 	return &JSR{}
 	// case 0xa9:
 	// 	return &RET{}
 	case 0xaa:
-		return &TABLE_SWITCH{}
+		return &control.TABLE_SWITCH{}
 	case 0xab:
-		return &LOOKUP_SWITCH{}
+		return &control.LOOKUP_SWITCH{}
 	// case 0xac:
 	// 	return ireturn
 	// case 0xad:
@@ -556,15 +561,15 @@ func NewInstruction(opcode byte) base.Instruction {
 	// case 0xc3:
 	// 	return monitorexit
 	case 0xc4:
-		return &WIDE{}
+		return &extended.WIDE{}
 	// case 0xc5:
 	// 	return &MULTI_ANEW_ARRAY{}
 	case 0xc6:
-		return &IFNULL{}
+		return &extended.IFNULL{}
 	case 0xc7:
-		return &IFNONNULL{}
+		return &extended.IFNONNULL{}
 	case 0xc8:
-		return &GOTO_W{}
+		return &extended.GOTO_W{}
 	// case 0xc9:
 	// 	return &JSR_W{}
 	// case 0xca: breakpoint

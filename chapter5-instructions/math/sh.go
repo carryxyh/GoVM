@@ -74,7 +74,7 @@ func (self LSHR) Execute(frame *chapter4_rtdt.Frame) {
 	stack.PushLong(result)
 }
 
-type IUSHR struct {
+type LUSHR struct {
 	base.NoOperandsInstruction
 }
 
