@@ -7,7 +7,7 @@ import (
 	"GoVM/chapter5-instructions/base"
 )
 
-func interpret(methodInfo *chapter3_cf.MemberInfo) {
+func Interpret(methodInfo *chapter3_cf.MemberInfo) {
 	//获取code属性
 	codeAttr := methodInfo.CodeAttribute()
 

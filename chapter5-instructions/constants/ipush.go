@@ -12,7 +12,7 @@ type BIPUSH struct {
 	val int8
 }
 
-func (self *BIPUSH) FethchOperands(reader *base.BytecodeReader) {
+func (self *BIPUSH) FetchOperands(reader *base.BytecodeReader) {
 	self.val = reader.ReadInt8()
 }
 
@@ -28,7 +28,7 @@ type SIPUSH struct {
 	val int16
 }
 
-func (self *SIPUSH) FethchOperands(reader *base.BytecodeReader) {
+func (self *SIPUSH) FetchOperands(reader *base.BytecodeReader) {
 	self.val = reader.ReadInt16()
 }
 

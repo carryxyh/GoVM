@@ -168,6 +168,10 @@ type ICONST_5 struct {
 	base.NoOperandsInstruction
 }
 
+func (self *ICONST_5) Execute(frame *chapter4_rtdt.Frame) {
+	frame.OperandStack().PushInt(5)
+}
+
 /*---------------------------------------------------------------------------------------------------------*/
 
 /**

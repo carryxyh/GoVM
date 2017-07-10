@@ -32,8 +32,8 @@ func (self *FREM) Execute(frame *chapter4_rtdt.Frame) {
 	stack := frame.OperandStack()
 	v2 := stack.PopFloat()
 	v1 := stack.PopFloat()
-	result := math.Mod(v1, v2)
-	stack.PushDouble(result)
+	result := float32(math.Mod(float64(v1), float64(v2))) // todo
+	stack.PushFloat(result)
 }
 
 type IREM struct {
@@ -63,5 +63,5 @@ func (self *LREM) Execute(frame *chapter4_rtdt.Frame) {
 		panic("java.lang.ArithmeticException: / by zero")
 	}
 	result := v1 % v2
-	stack.PushInt(result)
+	stack.PushLong(result)
 }

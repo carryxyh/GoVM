@@ -26,5 +26,5 @@ func (self *LAND) Execute(frame *chapter4_rtdt.Frame) {
 	v2 := stack.PopLong()
 	v1 := stack.PopLong()
 	result := v1 & v2
-	stack.PushInt(result)
+	stack.PushLong(result)
 }

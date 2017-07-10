@@ -7,6 +7,8 @@ import (
 	"GoVM/chapter2-class/classpath"
 	"GoVM/chapter3-cf/classfile"
 	"GoVM/chapter4-rtdt"
+	"strings"
+	"GoVM/chapter5-instructions"
 )
 
 type Cmd struct {
@@ -57,10 +59,21 @@ func main() {
 }
 
 func startJVM(cmd *Cmd) {
+	//第五届测试代码
+	cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
+	className := strings.Replace(cmd.class, ".", "/", -1)
+	cf := loadClass(className, cp)
+	mainMethod := getMainMethod(cf)
+	if mainMethod != nil {
+		chapter5_instructions.Interpret(mainMethod)
+	} else {
+		fmt.Println("Main method not found")
+	}
+
 	//第四节测试代码
-	frame := chapter4_rtdt.NewFrame(100, 100)
-	testLocals(frame.LocalVars())
-	testOperandStack(frame.OperandStack())
+	//frame := chapter4_rtdt.NewFrame(100, 100)
+	//testLocals(frame.LocalVars())
+	//testOperandStack(frame.OperandStack())
 
 	//第三节测试代码
 	//cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
@@ -143,4 +156,13 @@ func printClassInfo(cf *chapter3_cf.ClassFile) {
 	for _, m := range cf.Methods() {
 		fmt.Printf("  %s\n", m.Name())
 	}
+}
+
+func getMainMethod(classFile *chapter3_cf.ClassFile) *chapter3_cf.MemberInfo {
+	for _, m := range classFile.Methods() {
+		if m.Name() == "main" && m.Descriptor() == "([Ljava/lang/String;)V" {
+			return m
+		}
+	}
+	return nil
 }

@@ -13,7 +13,7 @@ func (self *D2F) Execute(frame *chapter4_rtdt.Frame) {
 	stack := frame.OperandStack()
 	d := stack.PopDouble()
 	f := float32(d)
-	stack.PushInt(f)
+	stack.PushFloat(f)
 }
 
 type D2I struct {
@@ -35,5 +35,5 @@ func (self *D2L) Execute(frame *chapter4_rtdt.Frame) {
 	stack := frame.OperandStack()
 	d := stack.PopDouble()
 	l := int64(d)
-	stack.PushInt(l)
+	stack.PushLong(l)
 }

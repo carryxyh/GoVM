@@ -31,7 +31,7 @@ func (self *BytecodeReader) ReadUInt16() uint16 {
 	return (b1 << 8) | b2
 }
 
-func (self *BytecodeReader) ReadInt16() uint16 {
+func (self *BytecodeReader) ReadInt16() int16 {
 	return int16(self.ReadUInt16())
 }
 
