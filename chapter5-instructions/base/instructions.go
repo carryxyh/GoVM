@@ -5,7 +5,7 @@ import "GoVM/chapter4-rtdt"
 /**
 	操作码后面可以跟零字节或多字节的操作数，操作数就相当于函数的参数
  */
-type Instructions interface {
+type Instruction interface {
 	//从字节码中提取操作数
 	FetchOperands(reader *BytecodeReader)
 	//执行具体指令
