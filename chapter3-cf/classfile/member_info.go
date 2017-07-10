@@ -47,3 +47,13 @@ func (this *MemberInfo) Name() string {
 func (this *MemberInfo) Descriptor() string {
 	return this.constantPool.getUtf8(this.descriptorIndex)
 }
+
+func (this *MemberInfo) CodeAttribute() *CodeAttribute {
+	for _, attrInfo := range this.attributes {
+		switch attrInfo.(type) {
+		case *CodeAttribute:
+			return attrInfo.(*CodeAttribute)
+		}
+	}
+	return nil
+}

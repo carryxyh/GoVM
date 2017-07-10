@@ -49,6 +49,10 @@ func (self *BytecodeReader) SkipPadding() {
 	}
 }
 
+func (self *BytecodeReader) PC() int {
+	return self.pc
+}
+
 func (self *BytecodeReader) ReadInt32s(len int32) []int32 {
 	ints := make([]int32, len)
 	for i := range ints {
