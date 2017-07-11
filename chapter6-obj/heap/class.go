@@ -72,5 +72,5 @@ func (self *Class) StaticVars() chapter4_rtdt.Slots {
 }
 
 func (self *Class) NewObject() *chapter4_rtdt.Object {
-	return newObject(self)
+	return chapter4_rtdt.NewObject(self)
 }
