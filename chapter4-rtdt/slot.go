@@ -6,3 +6,5 @@ type Slot struct {
 	//引用
 	ref *Object
 }
+
+type Slots []Slot

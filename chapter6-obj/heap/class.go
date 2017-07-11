@@ -1,6 +1,9 @@
 package heap
 
-import "GoVM/chapter3-cf/classfile"
+import (
+	"GoVM/chapter3-cf/classfile"
+	"GoVM/chapter4-rtdt"
+)
 
 type Class struct {
 	//类访问标识符
@@ -17,7 +20,7 @@ type Class struct {
 	interfaces        []*Class
 	instanceSlowCount uint
 	staticSlotCount   uint
-	staticVars        *Slots
+	staticVars        *chapter4_rtdt.Slots
 }
 
 func newClass(cf *chapter3_cf.ClassFile) *Class {
@@ -64,4 +67,8 @@ func (self *Class) ConstantPool() *chapter3_cf.ConstantPool {
 }
 func (self *Class) StaticVars() Slots {
 	return self.staticVars
+}
+
+func (self *Class) NewObject() *Object {
+	return newObject(self)
 }
