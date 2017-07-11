@@ -67,10 +67,10 @@ func (self *Class) IsEnum() bool {
 func (self *Class) ConstantPool() *chapter3_cf.ConstantPool {
 	return self.constantPool
 }
-func (self *Class) StaticVars() Slots {
+func (self *Class) StaticVars() chapter4_rtdt.Slots {
 	return self.staticVars
 }
 
-func (self *Class) NewObject() *Object {
+func (self *Class) NewObject() *chapter4_rtdt.Object {
 	return newObject(self)
 }
