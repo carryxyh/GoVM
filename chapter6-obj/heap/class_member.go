@@ -2,6 +2,9 @@ package heap
 
 import "GoVM/chapter3-cf/classfile"
 
+/**
+	存放字段和方法公有的信息
+ */
 type ClassMember struct {
 	accessFlags uint16
 	name        string
