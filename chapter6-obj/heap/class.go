@@ -12,13 +12,15 @@ type Class struct {
 	name              string
 	superClassName    string
 	interfaceNames    []string
-	constantPool      *chapter3_cf.ConstantPool
+	constantPool      *ConstantPool
 	fields            []*Field
 	methods           []*Method
 	loader            *ClassLoader
 	superClass        *Class
 	interfaces        []*Class
+	//实例变量占据的空间大小
 	instanceSlowCount uint
+	//类变量占据的空间大小
 	staticSlotCount   uint
 	staticVars        *chapter4_rtdt.Slots
 }
