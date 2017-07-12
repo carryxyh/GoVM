@@ -57,3 +57,13 @@ func (this *MemberInfo) CodeAttribute() *CodeAttribute {
 	}
 	return nil
 }
+
+func (this *MemberInfo) ConstantValueAttribute() *ConstantValueAttribute {
+	for _, attrInfo := range this.attributes {
+		switch attrInfo.(type) {
+		case *ConstantValueAttribute :
+			return attrInfo.(*ConstantValueAttribute)
+		}
+	}
+	return nil
+}

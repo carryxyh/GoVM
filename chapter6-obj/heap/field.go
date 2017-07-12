@@ -15,8 +15,15 @@ func newFields(class *Class, cfFields []*chapter3_cf.MemberInfo) []*Field {
 		fields[i] = &Field{}
 		fields[i].class = class
 		fields[i].copyMemberInfo(cfField)
+		fields[i].copyAttributes(cfField)
 	}
 	return fields
+}
+
+func (self *Field) copyAttributes(cfField *chapter3_cf.MemberInfo) {
+	if valAttr := cfField.ConstantValueAttribute(); valAttr != nil {
+		self.constValueIndex = uint(valAttr.ConstantValueIndex())
+	}
 }
 
 func (self *Field) isLongOrDouble() bool {
