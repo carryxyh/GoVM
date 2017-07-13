@@ -21,7 +21,7 @@ func (self *SymRef) ResolvedClass() *Class {
 
 /**
 	   通过符号引用N
-	D -------------> C
+	类D -------------> 类C
 	解析过程：
 		D的加载器加载C
 		D是否有权限访问C -> 没有抛异常

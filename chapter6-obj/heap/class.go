@@ -80,7 +80,7 @@ func (self *Class) NewObject() *chapter4_rtdt.Object {
 	是否有权限访问
  */
 func (self *Class) isAccessibleTo(other *Class) bool {
-	return other.IsPublic() || self.GetPackageName() == other.GetPackageName()
+	return self.IsPublic() || self.GetPackageName() == other.GetPackageName()
 }
 
 func (self *Class) GetPackageName() string {
