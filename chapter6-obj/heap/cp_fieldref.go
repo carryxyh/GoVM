@@ -13,3 +13,13 @@ func newFieldRef(cp *ConstantPool, fieldrefInfo *chapter3_cf.ConstantFieldrefInf
 	ref.copyMemberRefInfo(&fieldrefInfo.ConstantMemberrefInfo)
 	return ref
 }
+
+/**
+	解析字段
+ */
+func (self *FieldRef) ResolvedField() *Field {
+	if self.field == nil {
+		self.resolveFieldRef()
+	}
+	return self.field
+}

@@ -3,6 +3,7 @@ package heap
 import (
 	"GoVM/chapter3-cf/classfile"
 	"GoVM/chapter4-rtdt"
+	"strings"
 )
 
 type Class struct {
@@ -73,4 +74,18 @@ func (self *Class) StaticVars() chapter4_rtdt.Slots {
 
 func (self *Class) NewObject() *chapter4_rtdt.Object {
 	return chapter4_rtdt.NewObject(self)
+}
+
+/**
+	是否有权限访问
+ */
+func (self *Class) isAccessibleTo(other *Class) bool {
+	return other.IsPublic() || self.GetPackageName() == other.GetPackageName()
+}
+
+func (self *Class) GetPackageName() string {
+	if i := strings.LastIndex(self.name, "/"); i >= 0 {
+		return self.name[:i]
+	}
+	return ""
 }
