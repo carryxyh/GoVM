@@ -44,6 +44,9 @@ func (self *FieldRef) resolveFieldRef() {
 	self.field = field
 }
 
+/**
+	从类、接口、父类中依次寻找
+ */
 func lookupField(class *Class, name, descriptor string) *Field {
 	for _, field := range class.fields {
 		if field.name == name && field.descriptor == descriptor {

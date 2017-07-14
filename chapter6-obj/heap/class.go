@@ -65,7 +65,7 @@ func (self *Class) IsEnum() bool {
 }
 
 // getters
-func (self *Class) ConstantPool() *chapter3_cf.ConstantPool {
+func (self *Class) ConstantPool() *ConstantPool{
 	return self.constantPool
 }
 func (self *Class) StaticVars() chapter4_rtdt.Slots {
