@@ -10,5 +10,6 @@ type Object struct {
 func NewObject(class *heap.Class) *Object {
 	return &Object{
 		class:        class,
+		fields: NewSlots(class.InstanceSlotCount),
 	}
 }

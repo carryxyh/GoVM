@@ -1,5 +1,7 @@
 package chapter4_rtdt
 
+import "GoVM/chapter6-obj/heap"
+
 /**
 	栈帧
  */
@@ -12,6 +14,7 @@ type Frame struct {
 	operandStack *OperandStack
 	//这两个指令为了实现跳转
 	thread       *Thread
+	method       *heap.Method
 	nextPC       int
 }
 
@@ -25,6 +28,10 @@ func newFrame(thread *Thread, maxLocals, maxStack uint) *Frame {
 
 func (self *Frame) LocalVars() LocalVars {
 	return self.localVars
+}
+
+func (self *Frame) Method() *heap.Method {
+	return self.method
 }
 
 func (self *Frame) OperandStack() *OperandStack {

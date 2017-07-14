@@ -105,7 +105,7 @@ func prepare(class *Class) {
 func calcInstanceFieldSlotIds(class *Class) {
 	slotId := uint(0)
 	if class.superClass != nil {
-		slotId = class.superClass.instanceSlotCount
+		slotId = class.superClass.InstanceSlotCount
 	}
 	for _, field := range class.fields {
 		if !field.IsStatic() {
@@ -116,7 +116,7 @@ func calcInstanceFieldSlotIds(class *Class) {
 			}
 		}
 	}
-	class.instanceSlotCount = slotId
+	class.InstanceSlotCount = slotId
 }
 
 func calcStaticFieldSlotIds(class *Class) {

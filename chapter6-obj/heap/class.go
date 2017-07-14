@@ -20,7 +20,7 @@ type Class struct {
 	superClass        *Class
 	interfaces        []*Class
 	//实例变量(及private String name)占据的空间大小
-	instanceSlotCount uint
+	InstanceSlotCount uint
 	//类变量(及static类型的变量)占据的空间大小
 	staticSlotCount   uint
 	staticVars        *chapter4_rtdt.Slots

@@ -38,7 +38,7 @@ func readConstantPool(reader *ClassReader) ConstantPool {
 /**
 	获取常量信息
  */
-func (self ConstantPool) getConstantInfo(index uint16) ConstantInfo {
+func (self ConstantPool) GetConstantInfo(index uint16) ConstantInfo {
 	if cpInfo := self[index]; cpInfo != nil {
 		return cpInfo
 	}
@@ -49,7 +49,7 @@ func (self ConstantPool) getConstantInfo(index uint16) ConstantInfo {
 	获取名称和类型
  */
 func (self ConstantPool) getNameAndType(index uint16) (string, string) {
-	ntInfo := self.getConstantInfo(index).(*ConstantNameAndTypeInfo)
+	ntInfo := self.GetConstantInfo(index).(*ConstantNameAndTypeInfo)
 	name := self.getUtf8(ntInfo.nameIndex)
 	_type := self.getUtf8(ntInfo.descriptorIndex)
 	return name, _type
@@ -59,7 +59,7 @@ func (self ConstantPool) getNameAndType(index uint16) (string, string) {
 	获取class name
  */
 func (self ConstantPool) getClassName(index uint16) string {
-	classInfo := self.getConstantInfo(index).(*ConstantClassInfo)
+	classInfo := self.GetConstantInfo(index).(*ConstantClassInfo)
 	return self.getUtf8(classInfo.nameIndex)
 }
 
@@ -67,6 +67,6 @@ func (self ConstantPool) getClassName(index uint16) string {
 	从常量池获取utf8编码的string
  */
 func (self ConstantPool) getUtf8(index uint16) string {
-	utf8Info := self.getConstantInfo(index).(*ConstantUtf8Info)
+	utf8Info := self.GetConstantInfo(index).(*ConstantUtf8Info)
 	return utf8Info.str
 }
