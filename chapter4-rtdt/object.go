@@ -13,3 +13,7 @@ func NewObject(class *heap.Class) *Object {
 		fields: NewSlots(class.InstanceSlotCount),
 	}
 }
+
+func (self *Object) Fields() Slots {
+	return self.fields
+}
