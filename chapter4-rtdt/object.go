@@ -14,6 +14,10 @@ func NewObject(class *heap.Class) *Object {
 	}
 }
 
+func (self *Object) IsInstanceOf(class *heap.Class) bool {
+	return false
+}
+
 func (self *Object) Fields() Slots {
 	return self.fields
 }
