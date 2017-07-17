@@ -204,12 +204,12 @@ func NewInstruction(opcode byte) base.Instruction {
 		return &constants.BIPUSH{}
 	case 0x11:
 		return &constants.SIPUSH{}
-	// case 0x12:
-	// 	return &LDC{}
-	// case 0x13:
-	// 	return &LDC_W{}
-	// case 0x14:
-	// 	return &LDC2_W{}
+	 case 0x12:
+	 	return &constants.LDC{}
+	 case 0x13:
+	 	return &constants.LDC_W{}
+	 case 0x14:
+	 	return &constants.LDC2_W{}
 	case 0x15:
 		return &loads.ILOAD{}
 	case 0x16:
