@@ -15,7 +15,7 @@ func NewObject(class *heap.Class) *Object {
 }
 
 func (self *Object) IsInstanceOf(class *heap.Class) bool {
-	return false
+	return class.IsAssignableFrom(self.class)
 }
 
 func (self *Object) Fields() Slots {
