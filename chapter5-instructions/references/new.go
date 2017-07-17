@@ -17,7 +17,7 @@ type NEW struct {
 
 func (self *NEW) Execute(frame *chapter4_rtdt.Frame) {
 	cp := frame.Method().Class().ConstantPool()
-	classRef := cp.GetConstantInfo(self.Index).(*heap.ClassRef)
+	classRef := cp.GetConstant(self.Index).(*heap.ClassRef)
 	class := classRef.ResolvedClass()
 
 	if class.IsInterface() || class.IsAbstract() {
