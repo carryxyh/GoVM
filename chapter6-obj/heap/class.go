@@ -2,7 +2,6 @@ package heap
 
 import (
 	"GoVM/chapter3-cf/classfile"
-	"GoVM/chapter4-rtdt"
 	"strings"
 )
 
@@ -23,7 +22,7 @@ type Class struct {
 	InstanceSlotCount uint
 	//类变量(及static类型的变量)占据的空间大小
 	staticSlotCount   uint
-	staticVars        *chapter4_rtdt.Slots
+	staticVars        Slots
 }
 
 func newClass(cf *chapter3_cf.ClassFile) *Class {
@@ -68,12 +67,12 @@ func (self *Class) IsEnum() bool {
 func (self *Class) ConstantPool() *ConstantPool {
 	return self.constantPool
 }
-func (self *Class) StaticVars() chapter4_rtdt.Slots {
+func (self *Class) StaticVars() Slots {
 	return self.staticVars
 }
 
-func (self *Class) NewObject() *chapter4_rtdt.Object {
-	return chapter4_rtdt.NewObject(self)
+func (self *Class) NewObject() *Object {
+	return NewObject(self)
 }
 
 /**
@@ -91,7 +90,7 @@ func (self *Class) GetPackageName() string {
 }
 
 func (self *Class) GetMainMethod() *Method {
-	return self.getStaticMethod("main", "([java/lang/String;)V")
+	return self.getStaticMethod("main", "([Ljava/lang/String;)V")
 }
 
 func (self *Class) getStaticMethod(name, descriptor string) *Method {

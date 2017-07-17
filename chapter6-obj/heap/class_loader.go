@@ -4,7 +4,6 @@ import (
 	"GoVM/chapter2-class/classpath"
 	"fmt"
 	"GoVM/chapter3-cf/classfile"
-	"GoVM/chapter4-rtdt"
 )
 
 type ClassLoader struct {
@@ -134,7 +133,7 @@ func calcStaticFieldSlotIds(class *Class) {
 }
 
 func allocAndInitStaticVars(class *Class) {
-	class.staticVars = chapter4_rtdt.NewSlots(class.staticSlotCount)
+	class.staticVars = NewSlots(class.staticSlotCount)
 	for _, field := range class.fields {
 		if field.IsStatic() && field.IsFinal() {
 			//如果是static final 修饰的静态变量，从class文件的常量池里加载数值

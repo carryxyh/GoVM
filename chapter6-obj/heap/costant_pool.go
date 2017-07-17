@@ -18,17 +18,17 @@ type ConstantPool struct {
 /**
 	把classFile中的常量池转化成运行时常量池
  */
-func newConstantPool(class *Class, cfConstantPool chapter3_cf.ConstantPool) *ConstantPool {
-	cpCount := len(cfConstantPool)
+func newConstantPool(class *Class, cfCp chapter3_cf.ConstantPool) *ConstantPool {
+	cpCount := len(cfCp)
 	consts := make([]Constant, cpCount)
-	rtConstantPool := &ConstantPool{class, consts}
+	rtCp := &ConstantPool{class, consts}
 
 	for i := 1; i < cpCount; i++ {
-		cpInfo := cfConstantPool[i]
-		switch cpInfo.(type) {
+		cpInfo := cfCp[i]
 
-		case chapter3_cf.ConstantIntegerInfo:
-			intInfo := cpInfo.(chapter3_cf.ConstantIntegerInfo)
+		switch cpInfo.(type) {
+		case *chapter3_cf.ConstantIntegerInfo:
+			intInfo := cpInfo.(*chapter3_cf.ConstantIntegerInfo)
 			consts[i] = intInfo.Value()
 		case *chapter3_cf.ConstantFloatInfo:
 			floatInfo := cpInfo.(*chapter3_cf.ConstantFloatInfo)
@@ -45,21 +45,21 @@ func newConstantPool(class *Class, cfConstantPool chapter3_cf.ConstantPool) *Con
 			consts[i] = stringInfo.String()
 		case *chapter3_cf.ConstantClassInfo:
 			classInfo := cpInfo.(*chapter3_cf.ConstantClassInfo)
-			consts[i] = newClassRef(rtConstantPool, classInfo)
+			consts[i] = newClassRef(rtCp, classInfo)
 		case *chapter3_cf.ConstantFieldrefInfo:
 			fieldrefInfo := cpInfo.(*chapter3_cf.ConstantFieldrefInfo)
-			consts[i] = newFieldRef(rtConstantPool, fieldrefInfo)
+			consts[i] = newFieldRef(rtCp, fieldrefInfo)
 		case *chapter3_cf.ConstantMethodrefInfo:
 			methodrefInfo := cpInfo.(*chapter3_cf.ConstantMethodrefInfo)
-			consts[i] = newMethodRef(rtConstantPool, methodrefInfo)
+			consts[i] = newMethodRef(rtCp, methodrefInfo)
 		case *chapter3_cf.ConstantInterfaceMethodrefInfo:
 			methodrefInfo := cpInfo.(*chapter3_cf.ConstantInterfaceMethodrefInfo)
-			consts[i] = newInterfaceMethodRef(rtConstantPool, methodrefInfo)
+			consts[i] = newInterfaceMethodRef(rtCp, methodrefInfo)
 		default:
 		// todo
 		}
 	}
-	return rtConstantPool
+	return rtCp
 }
 
 /**
