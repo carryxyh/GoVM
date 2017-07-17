@@ -5,9 +5,9 @@ import "math"
 type Slot struct {
 	//虚拟机规范要求每个元素至少可以容纳一个int或引用，这里存放int，下面ref存放引用
 	//连续两个Slot可以存放double、long
-	num int32
+	Num int32
 	//引用
-	ref *Object
+	Ref *Object
 }
 
 type Slots []Slot
@@ -20,32 +20,32 @@ func NewSlots(slotCount uint) Slots {
 }
 
 func (self Slots) SetInt(index uint, val int32) {
-	self[index].num = val
+	self[index].Num = val
 }
 
 func (self Slots) GetInt(index uint) int32 {
-	return self[index].num
+	return self[index].Num
 }
 
 func (self Slots) SetFloat(index uint, val float32) {
 	bits := math.Float32bits(val)
-	self[index].num = int32(bits)
+	self[index].Num = int32(bits)
 }
 
 func (self Slots) GetFloat(index uint) float32 {
-	bits := uint32(self[index].num)
+	bits := uint32(self[index].Num)
 	return math.Float32frombits(bits)
 }
 
 // long consumes two slots
 func (self Slots) SetLong(index uint, val int64) {
-	self[index].num = int32(val)
-	self[index + 1].num = int32(val >> 32)
+	self[index].Num = int32(val)
+	self[index + 1].Num = int32(val >> 32)
 }
 
 func (self Slots) GetLong(index uint) int64 {
-	low := uint32(self[index].num)
-	high := uint32(self[index + 1].num)
+	low := uint32(self[index].Num)
+	high := uint32(self[index + 1].Num)
 	return int64(high) << 32 | int64(low)
 }
 
@@ -61,9 +61,9 @@ func (self Slots) GetDouble(index uint) float64 {
 }
 
 func (self Slots) SetRef(index uint, ref *Object) {
-	self[index].ref = ref
+	self[index].Ref = ref
 }
 
 func (self Slots) GetRef(index uint) *Object {
-	return self[index].ref
+	return self[index].Ref
 }

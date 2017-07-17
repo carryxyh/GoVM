@@ -21,8 +21,9 @@ type Frame struct {
 func newFrame(thread *Thread, method *heap.Method) *Frame {
 	return &Frame{
 		thread:        thread,
-		localVars:        newLocalVars(method.MaxStack()),
+		localVars:        newLocalVars(method.MaxLocals()),
 		operandStack:        newOperandStack(method.MaxLocals()),
+		method: 	method,
 	}
 }
 

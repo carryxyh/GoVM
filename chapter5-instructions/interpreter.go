@@ -27,9 +27,9 @@ func Interpret(method *heap.Method) {
 
 func catchErr(frame *chapter4_rtdt.Frame) {
 	if r := recover(); r != nil {
-		fmt.Printf("LocalVars: %v \n", frame.LocalVars())
-		fmt.Printf("OperandStack: %v \n", frame.OperandStack())
-		panic(r)
+		//fmt.Printf("LocalVars: %v \n", frame.LocalVars())
+		//fmt.Printf("OperandStack: %v \n", frame.OperandStack())
+		//panic(r)
 	}
 }
 
