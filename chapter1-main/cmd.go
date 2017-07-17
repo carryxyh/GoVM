@@ -7,6 +7,7 @@ import (
 	"GoVM/chapter2-class/classpath"
 	"GoVM/chapter3-cf/classfile"
 	"GoVM/chapter4-rtdt"
+	"GoVM/chapter6-obj/heap"
 	"strings"
 	"GoVM/chapter5-instructions"
 )
@@ -59,16 +60,29 @@ func main() {
 }
 
 func startJVM(cmd *Cmd) {
-	//第五届测试代码
+	//第六节测试代码
 	cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
+	classLoader := heap.NewClassLoader(cp)
+
 	className := strings.Replace(cmd.class, ".", "/", -1)
-	cf := loadClass(className, cp)
-	mainMethod := getMainMethod(cf)
+	mainClass := classLoader.LoadClass(className)
+	mainMethod := mainClass.GetMainMethod()
 	if mainMethod != nil {
 		chapter5_instructions.Interpret(mainMethod)
 	} else {
-		fmt.Println("Main method not found")
+		fmt.Printf("main method not found in class %v \n", className)
 	}
+
+	//第五节测试代码
+	//cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
+	//className := strings.Replace(cmd.class, ".", "/", -1)
+	//cf := loadClass(className, cp)
+	//mainMethod := getMainMethod(cf)
+	//if mainMethod != nil {
+	//	chapter5_instructions.Interpret(mainMethod)
+	//} else {
+	//	fmt.Println("Main method not found")
+	//}
 
 	//第四节测试代码
 	//frame := chapter4_rtdt.NewFrame(100, 100)

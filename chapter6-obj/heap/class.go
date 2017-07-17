@@ -65,7 +65,7 @@ func (self *Class) IsEnum() bool {
 }
 
 // getters
-func (self *Class) ConstantPool() *ConstantPool{
+func (self *Class) ConstantPool() *ConstantPool {
 	return self.constantPool
 }
 func (self *Class) StaticVars() chapter4_rtdt.Slots {
@@ -88,4 +88,17 @@ func (self *Class) GetPackageName() string {
 		return self.name[:i]
 	}
 	return ""
+}
+
+func (self *Class) GetMainMethod() *Method {
+	return self.getStaticMethod("main", "([java/lang/String;)V")
+}
+
+func (self *Class) getStaticMethod(name, descriptor string) *Method {
+	for _, method := range self.methods {
+		if method.IsStatic() && method.name == name && method.descriptor == descriptor {
+			return method
+		}
+	}
+	return nil
 }

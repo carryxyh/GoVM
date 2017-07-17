@@ -33,3 +33,15 @@ func (self *Method) copyAttributes(cfMethod *chapter3_cf.MemberInfo) {
 		self.maxLocals = codeAttr.MaxLocals()
 	}
 }
+
+func (method *Method) MaxStack() uint {
+	return method.maxStack
+}
+
+func (method *Method) MaxLocals() uint {
+	return method.maxLocals
+}
+
+func (self *Method) Code() []byte {
+	return self.code
+}

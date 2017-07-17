@@ -18,11 +18,11 @@ type Frame struct {
 	nextPC       int
 }
 
-func newFrame(thread *Thread, maxLocals, maxStack uint) *Frame {
+func newFrame(thread *Thread, method *heap.Method) *Frame {
 	return &Frame{
 		thread:        thread,
-		localVars:        newLocalVars(maxLocals),
-		operandStack:        newOperandStack(maxStack),
+		localVars:        newLocalVars(method.MaxStack()),
+		operandStack:        newOperandStack(method.MaxLocals()),
 	}
 }
 

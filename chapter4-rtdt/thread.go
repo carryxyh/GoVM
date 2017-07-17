@@ -1,5 +1,7 @@
 package chapter4_rtdt
 
+import "GoVM/chapter6-obj/heap"
+
 type Thread struct {
 	// pc 寄存器中存放当前正在执行的java虚拟机指令的 地址
 	pc    int
@@ -36,6 +38,6 @@ func (self *Thread) CurrentFrame() *Frame {
 	return self.stack.top()
 }
 
-func (self *Thread) NewFrame(maxLocals, maxStack uint) *Frame {
-	return newFrame(self, maxLocals, maxStack)
+func (self *Thread) NewFrame(method *heap.Method) *Frame {
+	return newFrame(self, method)
 }
