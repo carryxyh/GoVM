@@ -5,11 +5,12 @@ import "GoVM/chapter3-cf/classfile"
 type Method struct {
 	//继承自ClassMember，字段和方法都属于类的成员
 	ClassMember
-	code      []byte
+	code         []byte
+	argSlotCount uint
 
 	//以下两个值是由java编译器计算好了的
-	maxStack  uint
-	maxLocals uint
+	maxStack     uint
+	maxLocals    uint
 }
 
 func newMethods(class *Class, cfMethods []*chapter3_cf.MemberInfo) []*Method {
@@ -19,6 +20,7 @@ func newMethods(class *Class, cfMethods []*chapter3_cf.MemberInfo) []*Method {
 		methods[i].class = class
 		methods[i].copyMemberInfo(cfMethod)
 		methods[i].copyAttributes(cfMethod)
+		methods[i].calcArgSlotCount()
 	}
 	return methods
 }
@@ -34,6 +36,19 @@ func (self *Method) copyAttributes(cfMethod *chapter3_cf.MemberInfo) {
 	}
 }
 
+func (self *Method) calcArgSlotCount() {
+	parsedDescriptor := parseMethodDescriptor(self.descriptor)
+	for _, paramType := range parsedDescriptor.parameterTypes {
+		self.argSlotCount++
+		if paramType == "J" || paramType == "D" {
+			self.argSlotCount++
+		}
+	}
+	if !self.IsStatic() {
+		self.argSlotCount++
+	}
+}
+
 func (method *Method) MaxStack() uint {
 	return method.maxStack
 }
@@ -44,4 +59,8 @@ func (method *Method) MaxLocals() uint {
 
 func (self *Method) Code() []byte {
 	return self.code
+}
+
+func (self *Method) ArgSlotCount() uint {
+	return self.argSlotCount
 }
