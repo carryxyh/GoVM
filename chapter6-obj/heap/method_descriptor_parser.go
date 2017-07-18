@@ -3,6 +3,7 @@ package heap
 import "strings"
 
 type MethodDescriptorParser struct {
+	//还没有解析的描述符
 	raw    string
 	offset int
 	parsed *MethodDescriptor
@@ -13,6 +14,9 @@ func parseMethodDescriptor(descriptor string) *MethodDescriptor {
 	return parser.parse(descriptor)
 }
 
+/**
+	void (int a,int b) 描述符为 (I,I)V
+ */
 func (self *MethodDescriptorParser) parse(descriptor string) *MethodDescriptor {
 	self.raw = descriptor
 	self.parsed = &MethodDescriptor{}
