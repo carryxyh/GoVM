@@ -20,7 +20,7 @@ func (self *SymRef) ResolvedClass() *Class {
 }
 
 /**
-	   通过符号引用N
+	     通过符号引用N
 	类D -------------> 类C
 	解析过程：
 		D的加载器加载C
