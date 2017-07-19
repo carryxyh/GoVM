@@ -27,7 +27,7 @@ func (self *INVOKE_SPECIAL) Execute(frame *chapter4_rtdt.Frame) {
 
 	//从操作数栈中弹出this引用，如果为null 抛异常
 	//注意，在传递参数之前，不能破坏操作数栈的状态。
-	ref := frame.OperandStack().GetRefFromTop(resolvedMethod.ArgSlotCount())
+	ref := frame.OperandStack().GetRefFromTop(resolvedMethod.ArgSlotCount() - 1)
 	if ref == nil {
 		panic("java.lang.NullPointerException")
 	}
