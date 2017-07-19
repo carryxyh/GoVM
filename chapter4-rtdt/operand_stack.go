@@ -21,6 +21,15 @@ func newOperandStack(maxStack uint) *OperandStack {
 	return nil
 }
 
+/**
+	返回距离操作数栈顶n个单元格的引用变量。
+	n = 0 返回操作数占顶引用
+	n = 1 返回制定开始的第二个引用
+ */
+func (self *OperandStack) GetRefFromTop(n uint) *heap.Object {
+	return self.slots[self.size - n].Ref
+}
+
 //int操作
 func (self *OperandStack) PushInt(val int32) {
 	self.slots[self.size].Num = val

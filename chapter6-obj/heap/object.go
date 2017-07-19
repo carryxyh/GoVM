@@ -5,7 +5,7 @@ type Object struct {
 	fields Slots
 }
 
-func NewObject(class *Class) *Object {
+func newObject(class *Class) *Object {
 	return &Object{
 		class:        class,
 		fields: NewSlots(class.InstanceSlotCount),
@@ -18,4 +18,8 @@ func (self *Object) IsInstanceOf(class *Class) bool {
 
 func (self *Object) Fields() Slots {
 	return self.fields
+}
+
+func (self *Object) Class() *Class {
+	return self.class
 }

@@ -63,7 +63,7 @@ func (self *Class) IsEnum() bool {
 	return 0 != self.accessFlags & ACC_ENUM
 }
 
-// getters
+// getters start
 func (self *Class) ConstantPool() *ConstantPool {
 	return self.constantPool
 }
@@ -71,8 +71,25 @@ func (self *Class) StaticVars() Slots {
 	return self.staticVars
 }
 
+func (self *Class) Name() string {
+	return self.name
+}
+
+func (self *Class) Fields() []*Field {
+	return self.fields
+}
+func (self *Class) Methods() []*Method {
+	return self.methods
+}
+
+func (self *Class) SuperClass() *Class {
+	return self.superClass
+}
+
+// getters end
+
 func (self *Class) NewObject() *Object {
-	return NewObject(self)
+	return newObject(self)
 }
 
 /**
@@ -80,6 +97,21 @@ func (self *Class) NewObject() *Object {
  */
 func (self *Class) isAccessibleTo(other *Class) bool {
 	return self.IsPublic() || self.GetPackageName() == other.GetPackageName()
+}
+
+// other extends self
+func (self *Class) IsSuperClassOf(other *Class) bool {
+	return other.IsSubClassOf(self)
+}
+
+// self extends other
+func (self *Class) IsSubClassOf(other *Class) bool {
+	for c := self.superClass; c != nil; c = c.superClass {
+		if c == other {
+			return true
+		}
+	}
+	return false
 }
 
 func (self *Class) GetPackageName() string {
