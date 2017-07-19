@@ -48,7 +48,7 @@ func loop(thread *chapter4_rtdt.Thread, bytecode []byte) {
 		frame.SetNextPC(reader.PC())
 
 		//execute
-		fmt.Printf("-------pc : %2d inst:%T %v \n", pc, inst, inst)
+		fmt.Printf("pc : %2d inst:%T %v \n", pc, inst, inst)
 		inst.Execute(frame)
 	}
 }

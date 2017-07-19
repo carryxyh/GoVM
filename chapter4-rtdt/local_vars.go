@@ -73,6 +73,6 @@ func (self LocalVars) SetSlot(index uint, slot heap.Slot) {
 	self[index] = slot
 }
 
-func (self LocalVars) GetSlot(index uint) {
+func (self LocalVars) GetSlot(index uint) heap.Slot {
 	return self[index]
 }
