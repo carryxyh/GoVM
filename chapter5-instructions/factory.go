@@ -154,12 +154,12 @@ var (
 	fcmpg   = &comparisons.FCMPG{}
 	dcmpl   = &comparisons.DCMPL{}
 	dcmpg   = &comparisons.DCMPG{}
-	// ireturn = &IRETURN{}
-	// lreturn = &LRETURN{}
-	// freturn = &FRETURN{}
-	// dreturn = &DRETURN{}
-	// areturn = &ARETURN{}
-	// _return = &RETURN{}
+	 ireturn = &control.IRETURN{}
+	 lreturn = &control.LRETURN{}
+	 freturn = &control.FRETURN{}
+	 dreturn = &control.DRETURN{}
+	 areturn = &control.ARETURN{}
+	 _return = &control.RETURN{}
 	// arraylength   = &ARRAY_LENGTH{}
 	// athrow        = &ATHROW{}
 	// monitorenter  = &MONITOR_ENTER{}
@@ -513,18 +513,18 @@ func NewInstruction(opcode byte) base.Instruction {
 		return &control.TABLE_SWITCH{}
 	case 0xab:
 		return &control.LOOKUP_SWITCH{}
-	// case 0xac:
-	// 	return ireturn
-	// case 0xad:
-	// 	return lreturn
-	// case 0xae:
-	// 	return freturn
-	// case 0xaf:
-	// 	return dreturn
-	// case 0xb0:
-	// 	return areturn
-	// case 0xb1:
-	// 	return _return
+	case 0xac:
+	 	return ireturn
+	case 0xad:
+	 	return lreturn
+	case 0xae:
+	 	return freturn
+	case 0xaf:
+	 	return dreturn
+	case 0xb0:
+	 	return areturn
+	case 0xb1:
+	 	return _return
 		case 0xb2:
 			return &references.GET_STATIC{}
 	 case 0xb3:
