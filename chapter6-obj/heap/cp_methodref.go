@@ -46,6 +46,23 @@ func (self *MethodRef) ResolvedMethod() *Method {
 func (self *MethodRef) resolveMethodRef() {
 
 	//这里我第一次写成 : self.class 这里有问题 这里的self.class 是个null 还在排查中
+	//这个问题现在的考虑是这样的：由于我们在 7 章节的时候，还没有实现类初始化，
+	//我们new只new出了一个FibonacciTest，它调用的system之类的都没有初始化，当然也没法从文件中的常量池解析为运行时常量池
+	//
+	//调试了一下发现,如果我们写成
+	//func newMethodRef(cp *ConstantPool, methodrefInfo *chapter3_cf.ConstantMethodrefInfo) *MethodRef {
+	//ref := &MethodRef{}
+	//ref.cp = cp
+	//ref.class = cp.class   <-  这里是新加的那句
+	//ref.copyMemberRefInfo(&methodrefInfo.ConstantMemberrefInfo)
+	//return ref
+	//}
+	//
+	//这里的cp 一直都是FibonacciTest，但是它继承中的SymRef的name是来自常量池中MethodInfo的name。
+	//而且SymRef的class在没有加载的时候是nil，是需要通过FibonacciTest的classLoader 去加载 outputStream这个类，加载之后 就是下面的c这个类
+	//说白了 调用方 d 来自FibonacciTest的常量池，并从常量池中获取的class引用
+	// 而 c （outputStream） 需要 这个方法 -> self 的 resolveClass获得。及加载outputStream这个类
+
 	d := self.cp.class
 
 	c := self.ResolvedClass()
