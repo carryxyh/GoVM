@@ -13,13 +13,15 @@ import (
 )
 
 type Cmd struct {
-	helpFlag    bool
-	versionFlag bool
+	helpFlag         bool
+	versionFlag      bool
+	verboseClassFlag bool
+	verboseInstFlag  bool
 	//classpath option
-	cpOption    string
-	XjreOption  string
-	class       string
-	args        []string
+	cpOption         string
+	XjreOption       string
+	class            string
+	args             []string
 }
 
 /**
@@ -31,6 +33,9 @@ func parseCmd() *Cmd {
 	flag.BoolVar(&cmd.helpFlag, "help", false, "print help message")
 	flag.BoolVar(&cmd.helpFlag, "?", false, "print help message")
 	flag.BoolVar(&cmd.versionFlag, "version", false, "version info")
+	flag.BoolVar(&cmd.verboseClassFlag, "verbose", false, "enable verbose output")
+	flag.BoolVar(&cmd.verboseClassFlag, "verbose:class", false, "enable verbose output")
+	flag.BoolVar(&cmd.verboseInstFlag, "verbose:inst", false, "enable verbose output")
 	flag.StringVar(&cmd.cpOption, "classpath", "", "class path")
 	flag.StringVar(&cmd.cpOption, "cp", "", "equals classpath")
 	flag.StringVar(&cmd.XjreOption, "Xjre", "", "path to jre")
@@ -62,13 +67,13 @@ func main() {
 func startJVM(cmd *Cmd) {
 	//第六节测试代码
 	cp := classpath.Parse(cmd.XjreOption, cmd.cpOption)
-	classLoader := heap.NewClassLoader(cp)
+	classLoader := heap.NewClassLoader(cp, cmd.verboseClassFlag)
 
 	className := strings.Replace(cmd.class, ".", "/", -1)
 	mainClass := classLoader.LoadClass(className)
 	mainMethod := mainClass.GetMainMethod()
 	if mainMethod != nil {
-		chapter5_instructions.Interpret(mainMethod)
+		chapter5_instructions.Interpret(mainMethod, cmd.verboseInstFlag)
 	} else {
 		fmt.Printf("main method not found in class %v \n", className)
 	}

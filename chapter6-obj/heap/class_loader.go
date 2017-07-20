@@ -7,14 +7,17 @@ import (
 )
 
 type ClassLoader struct {
-	cp       *classpath.Classpath
+	cp          *classpath.Classpath
+	//是否输出加载class信息
+	verboseFlag bool
 	//key 是类的完全限定名称
-	classMap map[string]*Class
+	classMap    map[string]*Class
 }
 
-func NewClassLoader(cp *classpath.Classpath) *ClassLoader {
+func NewClassLoader(cp *classpath.Classpath, verboseFlag bool) *ClassLoader {
 	return &ClassLoader{
 		cp:        cp,
+		verboseFlag:        verboseFlag,
 		classMap:        make(map[string]*Class),
 	}
 }
@@ -31,7 +34,11 @@ func (self *ClassLoader) loadNonArrayClass(name string) *Class {
 	data, entry := self.readClass(name)
 	class := self.defineClass(data)
 	link(class)
-	fmt.Printf("[Loaded %s from %s] \n", name, entry)
+
+	if self.verboseFlag {
+		fmt.Printf("[Loaded %s from %s]\n", name, entry)
+	}
+
 	return class
 }
 

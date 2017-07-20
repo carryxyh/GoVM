@@ -2,12 +2,12 @@ package chapter5_instructions
 
 import (
 	"GoVM/chapter4-rtdt"
-	"fmt"
 	"GoVM/chapter5-instructions/base"
 	"GoVM/chapter6-obj/heap"
+	"fmt"
 )
 
-func Interpret(method *heap.Method) {
+func Interpret(method *heap.Method, logInst bool) {
 	//获取code属性
 	//codeAttr := methodInfo.CodeAttribute()
 	//
@@ -21,34 +21,60 @@ func Interpret(method *heap.Method) {
 	frame := thread.NewFrame(method)
 	thread.PushFrame(frame)
 
-	defer catchErr(frame)
-	loop(thread, method.Code())
+	defer catchErr(thread)
+	loop(thread, logInst)
 }
 
-func catchErr(frame *chapter4_rtdt.Frame) {
+func catchErr(thread *chapter4_rtdt.Thread) {
 	if r := recover(); r != nil {
 		//fmt.Printf("LocalVars: %v \n", frame.LocalVars())
 		//fmt.Printf("OperandStack: %v \n", frame.OperandStack())
-		//panic(r)
+		logFrames(thread)
+		panic(r)
 	}
 }
 
-func loop(thread *chapter4_rtdt.Thread, bytecode []byte) {
-	frame := thread.PopFrame()
+func loop(thread *chapter4_rtdt.Thread, logInst bool) {
 	reader := &base.BytecodeReader{}
 	for {
+		frame := thread.CurrentFrame()
 		pc := frame.NextPC()
 		thread.SetPC(pc)
 
 		//decode
-		reader.Reset(bytecode, pc)
+		reader.Reset(frame.Method().Code(), pc)
 		opcode := reader.ReadUInt8()
 		inst := NewInstruction(opcode)
 		inst.FetchOperands(reader)
 		frame.SetNextPC(reader.PC())
 
+		if (logInst) {
+			logInstruction(frame, inst)
+		}
+
 		//execute
-		fmt.Printf("pc : %2d inst:%T %v \n", pc, inst, inst)
+		//fmt.Printf("pc : %2d inst:%T %v \n", pc, inst, inst)
+		if thread.IsStackEmpty() {
+			break
+		}
 		inst.Execute(frame)
+	}
+}
+
+func logInstruction(frame *chapter4_rtdt.Frame, inst base.Instruction) {
+	method := frame.Method()
+	className := method.Class().Name()
+	methodName := method.Name()
+	pc := frame.Thread().PC()
+	fmt.Printf("%v.%v() #%2d %T %v\n", className, methodName, pc, inst, inst)
+}
+
+func logFrames(thread *chapter4_rtdt.Thread) {
+	for !thread.IsStackEmpty() {
+		frame := thread.PopFrame()
+		method := frame.Method()
+		className := method.Class().Name()
+		fmt.Printf(">> pc:%4d %v.%v%v \n",
+			frame.NextPC(), className, method.Name(), method.Descriptor())
 	}
 }

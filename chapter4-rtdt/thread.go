@@ -23,6 +23,10 @@ func (self *Thread) SetPC(pc int) {
 	self.pc = pc
 }
 
+func (self *Thread) IsStackEmpty() bool {
+	return self.stack.IsEmpty()
+}
+
 /**
 	frame指虚拟机中线程栈的栈帧
  */
