@@ -1,6 +1,8 @@
 package heap
 
-import "GoVM/chapter3-cf/classfile"
+import (
+	"GoVM/chapter3-cf/classfile"
+)
 
 type MethodRef struct {
 	MemberRef
@@ -42,7 +44,10 @@ func (self *MethodRef) ResolvedMethod() *Method {
 		ConstantMethodrefInfo 在编译器，会存储C的class的index
  */
 func (self *MethodRef) resolveMethodRef() {
-	d := self.class
+
+	//这里我第一次写成 : self.class 这里有问题 这里的self.class 是个null 还在排查中
+	d := self.cp.class
+
 	c := self.ResolvedClass()
 	if c.IsInterface() {
 		panic("java.lang.IncompatibleClassChangeError")

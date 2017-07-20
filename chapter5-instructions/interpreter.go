@@ -54,10 +54,10 @@ func loop(thread *chapter4_rtdt.Thread, logInst bool) {
 
 		//execute
 		//fmt.Printf("pc : %2d inst:%T %v \n", pc, inst, inst)
+		inst.Execute(frame)
 		if thread.IsStackEmpty() {
 			break
 		}
-		inst.Execute(frame)
 	}
 }
 

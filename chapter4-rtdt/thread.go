@@ -1,6 +1,8 @@
 package chapter4_rtdt
 
-import "GoVM/chapter6-obj/heap"
+import (
+	"GoVM/chapter6-obj/heap"
+)
 
 type Thread struct {
 	// pc 寄存器中存放当前正在执行的java虚拟机指令的 地址
