@@ -27,7 +27,7 @@ func newOperandStack(maxStack uint) *OperandStack {
 	n = 1 返回制定开始的第二个引用
  */
 func (self *OperandStack) GetRefFromTop(n uint) *heap.Object {
-	return self.slots[self.size - n].Ref
+	return self.slots[self.size - 1 - n].Ref
 }
 
 //int操作

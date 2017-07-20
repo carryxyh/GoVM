@@ -3,6 +3,7 @@ package base
 import (
 	"GoVM/chapter4-rtdt"
 	"GoVM/chapter6-obj/heap"
+	"fmt"
 )
 
 /**
@@ -25,6 +26,16 @@ func InvokeMethod(invokerFrame *chapter4_rtdt.Frame, method *heap.Method) {
 			slot := invokerFrame.OperandStack().PopSlot()
 			//放到方法栈帧的局部变量表中
 			newFrame.LocalVars().SetSlot(uint(i), slot)
+		}
+	}
+
+	// hack!
+	if method.IsNative() {
+		if method.Name() == "registerNatives" {
+			thread.PopFrame()
+		} else {
+			panic(fmt.Sprintf("native method: %v.%v%v\n",
+				method.Class().Name(), method.Name(), method.Descriptor()))
 		}
 	}
 }

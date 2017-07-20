@@ -40,7 +40,7 @@ func (self *INVOKE_SPECIAL) Execute(frame *chapter4_rtdt.Frame) {
 	//如果调用的超类中的方法，但不是构造方法，且当前累的ACC_SUPER标志被设置，需要一个额外的过程查找最重要调用的方法；
 	//否则前面从放方法符号中解析出来的方法就是要调用的方法
 	toBeInvoked := resolvedMethod
-	if currentClass.IsSuper() && resolvedClass.IsSuperClassOf(currentClass) && resolvedMethod != "<init>" {
+	if currentClass.IsSuper() && resolvedClass.IsSuperClassOf(currentClass) && resolvedMethod.Name() != "<init>" {
 		toBeInvoked = heap.LookupMethodInClass(currentClass.SuperClass(), methodRef.Name(), methodRef.Descriptor())
 	}
 
