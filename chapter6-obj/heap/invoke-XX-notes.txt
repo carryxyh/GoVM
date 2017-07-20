@@ -61,3 +61,7 @@ invoke virtual 和 invoke interface：
     exampleMethod()首先将赋给局部变量 0 的 reference 压入stack（隐含参数this被传入给所有的实例方法）
     ，然后使用invokespecial指令通过这个引用调用interestingMethod()。
     尽管这里的对象时Subclass的实例，而且Subclass类中的interestingMethod()方法也是能够访问的，但是JVM最终还是调用了Superclass类中的interestingMethod()方法。
+
+    继续上面说的（invoke virtual时，this引用指向某个类 或 其子类 的实例）
+    类的继承关系是固定的，虚拟机用一种叫vtable（Virtual method table）的技术加速方法查找。
+    但是通过invoke interface指令调用接口方法时，this引用可以指向任何实现了该接口的类实例
