@@ -26,6 +26,18 @@ func (self *Class) isSubClassOf(other *Class) bool {
 	return false
 }
 
+// self implements iface
+func (self *Class) IsImplements(iface *Class) bool {
+	for c := self; c != nil; c = c.superClass {
+		for _, i := range c.interfaces {
+			if i == iface || i.isSubInterfaceOf(iface) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 /**
 	一个类是不是一个接口的实现类
  */
@@ -40,6 +52,7 @@ func (self *Class) isImplement(inface *Class) bool {
 	return false
 }
 
+//一个接口是不是另一个接口的子类
 func (self *Class) isSubInterfaceOf(inface *Class) bool {
 	for _, superInterface := range self.interfaces {
 		if superInterface == inface || superInterface.isSubInterfaceOf(inface) {

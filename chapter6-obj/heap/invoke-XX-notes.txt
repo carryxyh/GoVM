@@ -13,3 +13,51 @@ java7之后新增invokedynamic指令用于支持动态语言
     这个方法不一定就是最终要调用的方法，可能还需要一个查找过程才能找到最终调用的方法
 
 剩下的 n 个操作数就是要传递给这个方法的参数，从操作数栈中弹出
+
+invoke virtual 和 invoke interface：
+    invoke interface可以用 virtual 来替换！但是会影响效率
+
+    invoke virtual时，this引用指向某个类 或 其子类 的实例，举个例子：
+
+    class Superclass {
+        private void interestingMethod() {
+            System.out.println("Superclass's interesting method.");
+        }
+
+        void exampleMethod() {
+            interestingMethod();
+        }
+    }
+
+    class Subclass extends Superclass {
+        void interestingMethod() {
+            System.out.println("Subclass's interesting method.");
+        }
+
+        public static void main(String args[]) {
+            Subclass me = new Subclass();
+            me.exampleMethod();
+        }
+    }
+
+    main 方法的字节码：
+        0:   new     #5; //class Subclass
+        3:   dup
+        4:   invokespecial   #6; //Method "<init>":()V
+        7:   astore_1
+        8:   aload_1
+        9:   invokevirtual   #7; //Method exampleMethod:()V
+        12:  return
+
+    Subclass从Superclass处继承了exampleMethod()方法。
+    当Subclass的me对象调用exampleMethod()时使用的是invokevirtual。
+    JVM会创建一个新的栈帧并将其压入栈，然后执行exampleMethod()的bytecode。
+
+    下面是exampleMethod()的bytecode：
+        0:   aload_0   <-   这里是加载了Subclass的实例
+        1:   invokespecial   #5; //Method interestingMethod:()V
+        4:   return
+
+    exampleMethod()首先将赋给局部变量 0 的 reference 压入stack（隐含参数this被传入给所有的实例方法）
+    ，然后使用invokespecial指令通过这个引用调用interestingMethod()。
+    尽管这里的对象时Subclass的实例，而且Subclass类中的interestingMethod()方法也是能够访问的，但是JVM最终还是调用了Superclass类中的interestingMethod()方法。
