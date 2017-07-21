@@ -11,6 +11,9 @@ func InitClass(thread chapter4_rtdt.Thread, class *heap.Class) {
 	initSuperClass(thread, class)
 }
 
+/**
+	调用clinit
+ */
 func scheduleClinit(thread chapter4_rtdt.Thread, class *heap.Class) {
 	clinit := class.GetClinitMethod()
 	if clinit != nil {
@@ -19,6 +22,9 @@ func scheduleClinit(thread chapter4_rtdt.Thread, class *heap.Class) {
 	}
 }
 
+/**
+	递归的初始化父类
+ */
 func initSuperClass(thread chapter4_rtdt.Thread, class *heap.Class) {
 	if !class.IsInterface() {
 		superClass := class.SuperClass()
