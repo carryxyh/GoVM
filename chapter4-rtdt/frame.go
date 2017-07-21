@@ -23,8 +23,15 @@ func newFrame(thread *Thread, method *heap.Method) *Frame {
 		thread:        thread,
 		localVars:        newLocalVars(method.MaxLocals()),
 		operandStack:        newOperandStack(method.MaxStack()),
-		method: 	method,
+		method:        method,
 	}
+}
+
+/**
+	让当前线程的指令重新指向一条指令
+ */
+func (self *Frame) RevertNextPC() {
+	self.nextPC = self.thread.pc
 }
 
 func (self *Frame) LocalVars() LocalVars {

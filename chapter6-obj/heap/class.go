@@ -23,6 +23,8 @@ type Class struct {
 	//类变量(及static类型的变量)占据的空间大小
 	staticSlotCount   uint
 	staticVars        Slots
+	//类的 <clinit> 方法是否已经开始执行
+	initStarted       bool
 }
 
 func newClass(cf *chapter3_cf.ClassFile) *Class {
@@ -63,6 +65,10 @@ func (self *Class) IsEnum() bool {
 	return 0 != self.accessFlags & ACC_ENUM
 }
 
+func (self *Class) StartInit() {
+	self.initStarted = true
+}
+
 // getters start
 func (self *Class) ConstantPool() *ConstantPool {
 	return self.constantPool
@@ -84,6 +90,10 @@ func (self *Class) Methods() []*Method {
 
 func (self *Class) SuperClass() *Class {
 	return self.superClass
+}
+
+func (self *Class) InitStarted() bool {
+	return self.initStarted
 }
 
 // getters end

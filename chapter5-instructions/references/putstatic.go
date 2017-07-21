@@ -20,6 +20,11 @@ func (self *PUT_STATIC) Execute(frame *chapter4_rtdt.Frame) {
 	fieldRef := cp.GetConstant(self.Index).(*heap.FieldRef)
 	field := fieldRef.ResolvedField()
 	class := field.Class()
+	if !class.InitStarted() {
+		frame.RevertNextPC()
+		base.InitClass(frame.Thread(), class)
+		return
+	}
 
 	//如果解析后的字段不是静态的，抛异常
 	if !field.IsStatic() {
