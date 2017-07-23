@@ -35,6 +35,9 @@ func (self *Object) Refs() []*Object {
 	return self.data.([]*Object)
 }
 
+/**
+	数组长度
+ */
 func (self *Object) ArrayLength() int32 {
 	switch self.data.(type) {
 	case []int8:
