@@ -9,6 +9,14 @@ package heap
 type SymRef struct {
 	cp        *ConstantPool
 	className string
+	//这里的这个class，是这个SymRef拥有者的class，不是调用方的
+	//举例子
+	// class A {
+	// 	void do() {
+	// 		System.currentMills()
+	// 	}
+	// }
+	// 那么currentMills的class即为System
 	class     *Class
 }
 
