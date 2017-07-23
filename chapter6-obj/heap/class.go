@@ -106,6 +106,11 @@ func (self *Class) NewObject() *Object {
 	return newObject(self)
 }
 
+func (self *Class) ArrayClass() *Class {
+	arrayClassName := getArrayClassName(self.name)
+	return self.loader.LoadClass(arrayClassName)
+}
+
 /**
 	是否有权限访问
  */
