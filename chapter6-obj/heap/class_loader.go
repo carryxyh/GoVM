@@ -27,6 +27,10 @@ func (self *ClassLoader) LoadClass(name string) *Class {
 		//类已经被加载过了
 		return class
 	}
+
+	if name[0] == '[' {
+		return self.loadArrayClass(name)
+	}
 	return self.loadNonArrayClass(name)
 }
 
@@ -39,6 +43,26 @@ func (self *ClassLoader) loadNonArrayClass(name string) *Class {
 		fmt.Printf("[Loaded %s from %s]\n", name, entry)
 	}
 
+	return class
+}
+
+/**
+	加载数组类
+ */
+func (self *ClassLoader) loadArrayClass(name string) *Class {
+	class := &Class{
+		accessFlags: ACC_PUBLIC, // todo
+		name:        name,
+		loader:      self,
+		initStarted: true,
+		superClass:  self.LoadClass("java/lang/Object"),
+		interfaces: []*Class{
+			//数组默认实现了Cloneable和Serializable接口
+			self.LoadClass("java/lang/Cloneable"),
+			self.LoadClass("java/io/Serializable"),
+		},
+	}
+	self.classMap[name] = class
 	return class
 }
 

@@ -96,6 +96,10 @@ func (self *Class) InitStarted() bool {
 	return self.initStarted
 }
 
+func (self *Class) Loader() *ClassLoader {
+	return self.loader
+}
+
 // getters end
 
 func (self *Class) NewObject() *Object {
