@@ -17,6 +17,7 @@ type SymRef struct {
 	// 	}
 	// }
 	// 那么currentMills的class即为System
+	// 但是！上面的constantPool，是class A 的运行时常量池！
 	class     *Class
 }
 
