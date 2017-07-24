@@ -20,7 +20,7 @@ func (self *MULTI_ANEW_ARRAY) FetchOperands(reader *base.BytecodeReader) {
 
 func (self *MULTI_ANEW_ARRAY) Execute(frame *chapter4_rtdt.Frame) {
 	cp := frame.Method().Class().ConstantPool()
-	classRef := cp.GetConstant(self.index).(*heap.ClassRef)
+	classRef := cp.GetConstant(uint(self.index)).(*heap.ClassRef)
 	arrClass := classRef.ResolvedClass()
 
 	stack := frame.OperandStack()

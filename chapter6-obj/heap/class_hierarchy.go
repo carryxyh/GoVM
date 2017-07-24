@@ -34,7 +34,7 @@ func (self *Class) IsAssignableFrom(other *Class) bool {
 		// s is array
 		if !t.IsArray() {
 			if !t.IsInterface() {
-				// t is class
+				// t is classBubbleSortTest.class
 				return t.isJlObject()
 			} else {
 				// t is interface
