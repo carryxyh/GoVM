@@ -563,8 +563,8 @@ func NewInstruction(opcode byte) base.Instruction {
 	// 	return monitorexit
 	case 0xc4:
 		return &extended.WIDE{}
-	// case 0xc5:
-	// 	return &MULTI_ANEW_ARRAY{}
+	case 0xc5:
+		return &references.MULTI_ANEW_ARRAY{}
 	case 0xc6:
 		return &extended.IFNULL{}
 	case 0xc7:
