@@ -133,6 +133,16 @@ func (self *Class) IsSubClassOf(other *Class) bool {
 	return false
 }
 
+func (self *Class) isJlObject() bool {
+	return self.name == "java/lang/Object"
+}
+func (self *Class) isJlCloneable() bool {
+	return self.name == "java/lang/Cloneable"
+}
+func (self *Class) isJioSerializable() bool {
+	return self.name == "java/io/Serializable"
+}
+
 func (self *Class) GetPackageName() string {
 	if i := strings.LastIndex(self.name, "/"); i >= 0 {
 		return self.name[:i]
