@@ -7,7 +7,7 @@ import (
 	"fmt"
 )
 
-func Interpret(method *heap.Method, logInst bool) {
+func Interpret(method *heap.Method, logInst bool, args []string) {
 	//获取code属性
 	//codeAttr := methodInfo.CodeAttribute()
 	//
@@ -21,8 +21,22 @@ func Interpret(method *heap.Method, logInst bool) {
 	frame := thread.NewFrame(method)
 	thread.PushFrame(frame)
 
+	//转成字符串数组
+	jArgs := createArgsArray(method.Class().Loader(), args)
+	frame.LocalVars().SetRef(0, jArgs)
+
 	defer catchErr(thread)
 	loop(thread, logInst)
+}
+
+func createArgsArray(loader *heap.ClassLoader, args []string) *heap.Object {
+	stringClass := loader.LoadClass("java/lang/String")
+	argsArr := stringClass.ArrayClass().NewArray(uint(len(args)))
+	jArgs := argsArr.Refs()
+	for i, arg := range args {
+		jArgs[i] = heap.JString(loader, arg)
+	}
+	return argsArr
 }
 
 func catchErr(thread *chapter4_rtdt.Thread) {

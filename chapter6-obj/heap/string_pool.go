@@ -28,3 +28,15 @@ func stringToUtf16(s string) []uint16 {
 	runes := []rune(s)         // utf32
 	return utf16.Encode(runes) // func Encode(s []rune) []uint16
 }
+
+// java.lang.String -> go string
+func GoString(jStr *Object) string {
+	charArr := jStr.GetRefVar("value", "[C")
+	return utf16ToString(charArr.Chars())
+}
+
+// utf16 -> utf8
+func utf16ToString(s []uint16) string {
+	runes := utf16.Decode(s) // func Decode(s []uint16) []rune
+	return string(runes)
+}
