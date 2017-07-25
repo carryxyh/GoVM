@@ -3,7 +3,10 @@ package heap
 type Object struct {
 	class *Class
 	data  interface{}
-	//用来记录Object结构体的额外信息
+	/**
+		用来记录Object结构体的额外信息:
+			1.某个类的对象 对应的 Class结构体指针，这里的这个Class是JVM方法区中的Class结构体 -> heap.Class
+	 */
 	extra interface{}
 }
 
@@ -18,6 +21,7 @@ func (self *Object) IsInstanceOf(class *Class) bool {
 	return class.IsAssignableFrom(self.class)
 }
 
+//getter start
 func (self *Object) Fields() Slots {
 	return self.data.(Slots)
 }
@@ -32,6 +36,7 @@ func (self *Object) Extra() interface{} {
 func (self *Object) SetExtra(extra interface{}) {
 	self.extra = extra
 }
+//getter end
 
 // reflection
 func (self *Object) SetRefVar(name, descriptor string, ref *Object) {
