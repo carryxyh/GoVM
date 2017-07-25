@@ -3,6 +3,8 @@ package heap
 type Object struct {
 	class *Class
 	data  interface{}
+	//用来记录Object结构体的额外信息
+	extra interface{}
 }
 
 func newObject(class *Class) *Object {
@@ -22,6 +24,13 @@ func (self *Object) Fields() Slots {
 
 func (self *Object) Class() *Class {
 	return self.class
+}
+
+func (self *Object) Extra() interface{} {
+	return self.extra
+}
+func (self *Object) SetExtra(extra interface{}) {
+	self.extra = extra
 }
 
 // reflection

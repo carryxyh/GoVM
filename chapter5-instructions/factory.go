@@ -13,6 +13,7 @@ import (
 	"GoVM/chapter5-instructions/control"
 	"GoVM/chapter5-instructions/extended"
 	"GoVM/chapter5-instructions/references"
+	"GoVM/chapter5-instructions/reserved"
 )
 
 // NoOperandsInstruction singletons
@@ -164,7 +165,7 @@ var (
 	// athrow        = &ATHROW{}
 	// monitorenter  = &MONITOR_ENTER{}
 	// monitorexit   = &MONITOR_EXIT{}
-	// invoke_native = &INVOKE_NATIVE{}
+	invoke_native = &reserved.INVOKE_NATIVE{}
 )
 
 func NewInstruction(opcode byte) base.Instruction {
@@ -574,7 +575,7 @@ func NewInstruction(opcode byte) base.Instruction {
 	// case 0xc9:
 	// 	return &JSR_W{}
 	// case 0xca: breakpoint
-	// case 0xfe: impdep1
+	case 0xfe: invoke_native
 	// case 0xff: impdep2
 	default:
 		panic(fmt.Errorf("Unsupported opcode: 0x%x!", opcode))

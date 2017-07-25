@@ -25,6 +25,8 @@ type Class struct {
 	staticVars        Slots
 	//类的 <clinit> 方法是否已经开始执行
 	initStarted       bool
+	//与一个java中的java.lang.Class对应，而这个struct本身指的是虚拟机中的class
+	jClass            *Object
 }
 
 func newClass(cf *chapter3_cf.ClassFile) *Class {
