@@ -15,10 +15,26 @@ type ClassLoader struct {
 }
 
 func NewClassLoader(cp *classpath.Classpath, verboseFlag bool) *ClassLoader {
-	return &ClassLoader{
+	loader := &ClassLoader{
 		cp:        cp,
 		verboseFlag:        verboseFlag,
 		classMap:        make(map[string]*Class),
+	}
+	loader.loadBasicClasses()
+	return loader
+}
+
+/**
+	先加载 java.lang.Class 类，这会触发 java.lang.Object等类和接口的加载。
+	然后遍历classMap，给已经加载的每一个 类 关联 类对象。
+ */
+func (self *ClassLoader) loadBasicClasses() {
+	jlClassClass := self.LoadClass("java/lang/Class")
+	for _, class := range self.classMap {
+		if class.jClass == nil {
+			class.jClass = jlClassClass.NewObject()
+			class.jClass.extra = class
+		}
 	}
 }
 
@@ -28,12 +44,24 @@ func (self *ClassLoader) LoadClass(name string) *Class {
 		return class
 	}
 
+	var class *Class
 	if name[0] == '[' {
-		return self.loadArrayClass(name)
+		class = self.loadArrayClass(name)
+	} else {
+		class = self.loadNonArrayClass(name)
 	}
-	return self.loadNonArrayClass(name)
+
+	if jlClassClass, ok := self.classMap["java/lang/Class"]; ok {
+		class.jClass = jlClassClass.NewObject()
+		class.jClass.extra = class
+	}
+
+	return class
 }
 
+/**
+	加载 所有 非数组 的类
+ */
 func (self *ClassLoader) loadNonArrayClass(name string) *Class {
 	data, entry := self.readClass(name)
 	class := self.defineClass(data)
