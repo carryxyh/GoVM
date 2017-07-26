@@ -21,6 +21,7 @@ func NewClassLoader(cp *classpath.Classpath, verboseFlag bool) *ClassLoader {
 		classMap:        make(map[string]*Class),
 	}
 	loader.loadBasicClasses()
+	loader.loadPrimitiveClasses()
 	return loader
 }
 
@@ -32,10 +33,36 @@ func (self *ClassLoader) loadBasicClasses() {
 	jlClassClass := self.LoadClass("java/lang/Class")
 	for _, class := range self.classMap {
 		if class.jClass == nil {
+			//这里其实是把 方法区中的Class 的jClass字段 存放了 new java.lang.Class()
 			class.jClass = jlClassClass.NewObject()
 			class.jClass.extra = class
 		}
 	}
+}
+
+/**
+	加载原始的类  比如 void.class int.class等等
+	void的类就叫void，而且没有超类，没有任何接口
+	非基本类型的类对象通过ldc指令加载到操作数栈
+	基本类型的类对象，虽然在java代码中看起来是通过字面量获取的，但是编译之后的指令并不是ldc，而是getstatic
+	每个基本类型都有一个包装类，包装类中有一个静态常量，叫TYPE，其中存放的就是基本类型的类
+ */
+func (self *ClassLoader) loadPrimitiveClasses() {
+	for primitiveType := range primitiveTypes {
+		self.loadPrimitiveClass(primitiveType)
+	}
+}
+
+func (self *ClassLoader) loadPrimitiveClass(className string) {
+	class := &Class{
+		accessFlags: ACC_PUBLIC,
+		name: className,
+		loader: self,
+		initStarted: true,
+	}
+	class.jClass = self.classMap["java/lang/Class"].NewObject()
+	class.jClass.extra = class
+	self.classMap[className] = class
 }
 
 func (self *ClassLoader) LoadClass(name string) *Class {
@@ -52,6 +79,7 @@ func (self *ClassLoader) LoadClass(name string) *Class {
 	}
 
 	if jlClassClass, ok := self.classMap["java/lang/Class"]; ok {
+		//这里其实是把 方法区中的Class 的jClass字段 存放了 new java.lang.Class()
 		class.jClass = jlClassClass.NewObject()
 		class.jClass.extra = class
 	}

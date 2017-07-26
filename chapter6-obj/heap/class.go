@@ -102,6 +102,10 @@ func (self *Class) Loader() *ClassLoader {
 	return self.loader
 }
 
+func (self *Class) JClass() *Object {
+	return self.jClass
+}
+
 // getters end
 
 func (self *Class) NewObject() *Object {
