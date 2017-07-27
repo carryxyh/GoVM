@@ -84,11 +84,11 @@ func logInstruction(frame *chapter4_rtdt.Frame, inst base.Instruction) {
 }
 
 func logFrames(thread *chapter4_rtdt.Thread) {
-	for !thread.IsStackEmpty() {
-		frame := thread.PopFrame()
-		method := frame.Method()
-		className := method.Class().Name()
-		fmt.Printf(">> pc:%4d %v.%v%v \n",
-			frame.NextPC(), className, method.Name(), method.Descriptor())
-	}
+	//for !thread.IsStackEmpty() {
+	//	frame := thread.PopFrame()
+	//	method := frame.Method()
+	//	className := method.Class().Name()
+	//	fmt.Printf(">> pc:%4d %v.%v%v \n",
+	//		frame.NextPC(), className, method.Name(), method.Descriptor())
+	//}
 }
