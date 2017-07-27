@@ -69,6 +69,11 @@ func (self LocalVars) GetRef(index uint) *heap.Object {
 	return self[index].Ref
 }
 
+func (self LocalVars) GetThis() *heap.Object {
+	//this 放在 本地变量表的第一个位置
+	return self.GetRef(0)
+}
+
 func (self LocalVars) SetSlot(index uint, slot heap.Slot) {
 	self[index] = slot
 }
