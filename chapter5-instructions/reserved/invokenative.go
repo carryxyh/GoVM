@@ -26,5 +26,6 @@ func (self *INVOKE_NATIVE) Execute(frame *chapter4_rtdt.Frame) {
 		methodInfo := className + "." + methodName + "--" + methodDescriptor
 		panic("java.lang.UnsatisfiedLinkError: " + methodInfo)
 	}
+	//这相当于调用找到的native method
 	nativeMethod(frame)
 }
