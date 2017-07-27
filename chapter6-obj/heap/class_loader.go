@@ -48,7 +48,7 @@ func (self *ClassLoader) loadBasicClasses() {
 	每个基本类型都有一个包装类，包装类中有一个静态常量，叫TYPE，其中存放的就是基本类型的类
  */
 func (self *ClassLoader) loadPrimitiveClasses() {
-	for primitiveType, _ := range primitiveTypes {
+	for primitiveType := range primitiveTypes {
 		self.loadPrimitiveClass(primitiveType)
 	}
 }
