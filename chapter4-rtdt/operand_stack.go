@@ -30,6 +30,18 @@ func (self *OperandStack) GetRefFromTop(n uint) *heap.Object {
 	return self.slots[self.size - 1 - n].Ref
 }
 
+func (self *OperandStack) PushBoolean(val bool) {
+	if val {
+		self.PushInt(1)
+	} else {
+		self.PushInt(0)
+	}
+}
+
+func (self *OperandStack) PopBoolean() bool {
+	return self.PopInt() == 1
+}
+
 //int操作
 func (self *OperandStack) PushInt(val int32) {
 	self.slots[self.size].Num = val

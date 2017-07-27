@@ -8,7 +8,7 @@ import (
 const jlObject = "java/lang/Object"
 
 func init() {
-	native.Register("java/lang/Object", "getClass", "()Ljava/lang/Class;", getClass)
+	native.Register(jlObject, "getClass", "()Ljava/lang/Class;", getClass)
 }
 
 //public final native Class<?> getClass

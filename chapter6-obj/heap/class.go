@@ -108,6 +108,10 @@ func (self *Class) JClass() *Object {
 
 // getters end
 
+func (self *Class) JavaName() string {
+	return strings.Replace(self.name, "/", ".", -1)
+}
+
 func (self *Class) NewObject() *Object {
 	return newObject(self)
 }
