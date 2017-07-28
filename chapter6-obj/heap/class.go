@@ -133,6 +133,14 @@ func (self *Class) IsSuperClassOf(other *Class) bool {
 	return other.IsSubClassOf(self)
 }
 
+/**
+	是否是基本类型
+ */
+func (self *Class) IsPrimitive() bool {
+	_, ok := primitiveTypes[self.name]
+	return ok
+}
+
 // self extends other
 func (self *Class) IsSubClassOf(other *Class) bool {
 	for c := self.superClass; c != nil; c = c.superClass {
