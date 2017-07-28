@@ -26,6 +26,18 @@ func JString(loader *ClassLoader, goStr string) *Object {
 	return jStr
 }
 
+/**
+	intern方法
+ */
+func InternString(str *Object) *Object {
+	goStr := GoString(str)
+	if internedStr, ok := internedStrings[goStr]; ok {
+		return internedStr
+	}
+	internedStrings[goStr] = str
+	return str
+}
+
 // utf8 -> utf16
 func stringToUtf16(s string) []uint16 {
 	runes := []rune(s)         // utf32
