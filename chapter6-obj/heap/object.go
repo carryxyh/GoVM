@@ -45,6 +45,9 @@ func (self *Object) SetRefVar(name, descriptor string, ref *Object) {
 	slots.SetRef(field.slotId, ref)
 }
 
+/**
+	获取一个对象中的某个字段的值
+ */
 func (self *Object) GetRefVar(name, descriptor string) *Object {
 	field := self.class.getField(name, descriptor, false)
 	slots := self.data.(Slots)
