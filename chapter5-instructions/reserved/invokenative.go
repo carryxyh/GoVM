@@ -6,6 +6,7 @@ import (
 	"GoVM/native"
 	//如果不显式使用lang包中的变量，只是让他执行init()方法，需要前面加下划线
 	_ "GoVM/native/java/lang"
+	_ "GoVM/native/sun/misc"
 )
 
 /**
