@@ -4,6 +4,7 @@ import (
 	"GoVM/native"
 	"GoVM/chapter4-rtdt"
 	"GoVM/chapter6-obj/heap"
+	"fmt"
 )
 
 const jlThrowable = "java/lang/Throwable"
@@ -17,6 +18,11 @@ type StackTraceElement struct {
 	className  string
 	methodName string
 	lineNumber int
+}
+
+func (self *StackTraceElement) String() string {
+	return fmt.Sprintf("%s.%s(%s:%d)",
+		self.className, self.methodName, self.fileName, self.lineNumber)
 }
 
 func fillInStackTrace(frame *chapter4_rtdt.Frame) {

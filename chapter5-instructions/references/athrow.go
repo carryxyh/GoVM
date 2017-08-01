@@ -33,7 +33,7 @@ func findAndGotoExceptionHandler(thread *chapter4_rtdt.Thread, ex *heap.Object) 
 		frame := thread.CurrentFrame()
 		pc := frame.NextPC() - 1
 
-		handlerPc := frame.Method().FindExceptionHandler(ex, pc)
+		handlerPc := frame.Method().FindExceptionHandler(ex.Class(), pc)
 		if handlerPc > 0 {
 			stack := frame.OperandStack()
 			stack.Clear()
@@ -57,15 +57,15 @@ func findAndGotoExceptionHandler(thread *chapter4_rtdt.Thread, ex *heap.Object) 
 func handleUncaughtException(thread *chapter4_rtdt.Thread, ex *heap.Object) {
 	thread.ClearStack()
 
-	jMsg := ex.GetRefVar("detailMessage", "Ljava/lang/String")
+	jMsg := ex.GetRefVar("detailMessage", "Ljava/lang/String;")
 	goMsg := heap.GoString(jMsg)
 	println(ex.Class().JavaName() + ": " + goMsg)
 
 	stes := reflect.ValueOf(ex.Extra())
 	for i := 0; i < stes.Len(); i++ {
 		ste := stes.Index(i).Interface().(interface {
-			string() string
+			String() string
 		})
-		println("\tat " + ste.string())
+		println("\tat " + ste.String())
 	}
 }
