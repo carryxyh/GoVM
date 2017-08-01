@@ -32,6 +32,9 @@ func (self *LineNumberTableAttribute) readInfo(reader *ClassReader) {
 	}
 }
 
+/**
+	这里为什么用了 pc >= entry.startPc ?
+ */
 func (self *LineNumberTableAttribute) GetLineNumber(pc int) int {
 	for i := len(self.lineNumberTable) - 1; i >= 0; i-- {
 		entry := self.lineNumberTable[i]

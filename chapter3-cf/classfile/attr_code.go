@@ -67,6 +67,9 @@ func readExceptionTable(reader *ClassReader) []*ExceptionTableEntry {
 	return exceptionTable
 }
 
+/**
+	找出行号属性
+ */
 func (self *CodeAttribute) LineNumberTableAttribute() *LineNumberTableAttribute {
 	for _, attrInfo := range self.attributes {
 		switch attrInfo.(type) {
