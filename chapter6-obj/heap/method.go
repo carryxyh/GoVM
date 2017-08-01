@@ -5,13 +5,14 @@ import "GoVM/chapter3-cf/classfile"
 type Method struct {
 	//继承自ClassMember，字段和方法都属于类的成员
 	ClassMember
-	code           []byte
-	argSlotCount   uint
+	code            []byte
+	argSlotCount    uint
 
 	//以下两个值是由java编译器计算好了的
-	maxStack       uint
-	maxLocals      uint
-	exceptionTable ExceptionTable
+	maxStack        uint
+	maxLocals       uint
+	exceptionTable  ExceptionTable
+	lineNumberTable *chapter3_cf.LineNumberTableAttribute
 }
 
 func newMethods(class *Class, cfMethods []*chapter3_cf.MemberInfo) []*Method {
@@ -69,6 +70,7 @@ func (self *Method) copyAttributes(cfMethod *chapter3_cf.MemberInfo) {
 	if codeAttr := cfMethod.CodeAttribute(); codeAttr != nil {
 		self.maxStack = codeAttr.MaxStack()
 		self.code = codeAttr.Code()
+		self.lineNumberTable = codeAttr.LineNumberTableAttribute()
 		self.maxLocals = codeAttr.MaxLocals()
 		self.exceptionTable = newExceptionTable(codeAttr.ExceptionTable(), self.class.constantPool)
 	}
@@ -83,6 +85,20 @@ func (self *Method) FindExceptionHandler(exClass *Class, pc int) int {
 		return handler.handlerPc
 	}
 	return -1
+}
+
+/**
+	方法没有行号表，返回-1
+	本地方法没有字节码，返回-2
+ */
+func (self *Method) GetLineNumber(pc int) int {
+	if self.IsNative() {
+		return -2
+	}
+	if self.lineNumberTable == nil {
+		return -1
+	}
+	return self.lineNumberTable.GetLineNumber(pc)
 }
 
 func (self *Method) calcArgSlotCount(paramTypes []string) {

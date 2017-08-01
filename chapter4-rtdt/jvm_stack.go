@@ -36,6 +36,15 @@ func (self *Stack) IsEmpty() bool {
 	return self._top == nil
 }
 
+func (self *Stack) getFrames() []*Frame {
+	frames := make([]*Frame, 0, self.size)
+
+	for frame := self._top; frame != nil; frame = frame.lower {
+		frames = append(frames, frame)
+	}
+	return frames
+}
+
 func (self *Stack) pop() *Frame {
 	if self._top == nil {
 		panic("jvm stack is empty!")

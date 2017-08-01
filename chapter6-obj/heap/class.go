@@ -27,6 +27,7 @@ type Class struct {
 	initStarted       bool
 	//与一个java中的java.lang.Class对应，而这个struct本身指的是虚拟机中的方法区中class的相关数据
 	jClass            *Object
+	sourceFile        string
 }
 
 func newClass(cf *chapter3_cf.ClassFile) *Class {
@@ -38,7 +39,15 @@ func newClass(cf *chapter3_cf.ClassFile) *Class {
 	class.constantPool = newConstantPool(class, cf.ConstantPool())
 	class.fields = newFields(class, cf.Fields())
 	class.methods = newMethods(class, cf.Methods())
+	class.sourceFile = getSourceFile(cf)
 	return class
+}
+
+func getSourceFile(cf *chapter3_cf.ClassFile) string {
+	if sfAttr := cf.SourceFileAttribute(); sfAttr != nil {
+		return sfAttr.FileName()
+	}
+	return "Unknown"
 }
 
 func (self *Class) IsPublic() bool {
@@ -224,4 +233,8 @@ func (self *Class) getStaticMethod(name, descriptor string) *Method {
 
 func (self *Class) GetClinitMethod() *Method {
 	return self.getStaticMethod("<clinit>", "()V")
+}
+
+func (self *Class) SourceFile() string {
+	return self.sourceFile
 }

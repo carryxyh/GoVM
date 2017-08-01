@@ -25,6 +25,10 @@ func (self *Thread) PC() int {
 	return self.pc
 }
 
+func (self *Thread) GetFrames() []*Frame {
+	return self.stack.getFrames()
+}
+
 func (self *Thread) SetPC(pc int) {
 	self.pc = pc
 }
