@@ -34,6 +34,11 @@ func (self *LineNumberTableAttribute) readInfo(reader *ClassReader) {
 
 /**
 	这里为什么用了 pc >= entry.startPc ?
+
+	紫苑注：
+		看字节码，行号属性中，startPc 和 startPc 相差并不是1  有的是12 有的差16
+		lineNumber 也并非递增，也存在lineNumber相等的LineNumberTableEntry
+		没找到什么规律。。
  */
 func (self *LineNumberTableAttribute) GetLineNumber(pc int) int {
 	for i := len(self.lineNumberTable) - 1; i >= 0; i-- {
