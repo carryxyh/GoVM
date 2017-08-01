@@ -17,6 +17,10 @@ func NewThread() *Thread {
 	}
 }
 
+func (self *Thread) ClearStack() {
+	self.stack.clear()
+}
+
 func (self *Thread) PC() int {
 	return self.pc
 }
