@@ -34,3 +34,7 @@ func (self *JVM) initVM() {
 	base.InitClass(self.mainThread, vmClass)
 	chapter5_instructions.Interpret(self.mainThread, self.cmd.verboseInstFlag)
 }
+
+func (self *JVM) execMain() {
+
+}

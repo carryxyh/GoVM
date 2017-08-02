@@ -7,7 +7,7 @@ import (
 	"fmt"
 )
 
-func Interpret(method *heap.Method, logInst bool, args []string) {
+func Interpret(thread *chapter4_rtdt.Thread, logInst bool) {
 	//获取code属性
 	//codeAttr := methodInfo.CodeAttribute()
 	//
@@ -17,13 +17,13 @@ func Interpret(method *heap.Method, logInst bool, args []string) {
 	//bytecode := codeAttr.Code()
 
 	//创建线程以及栈帧
-	thread := chapter4_rtdt.NewThread()
-	frame := thread.NewFrame(method)
-	thread.PushFrame(frame)
+	//thread := chapter4_rtdt.NewThread()
+	//frame := thread.NewFrame(method)
+	//thread.PushFrame(frame)
 
 	//转成字符串数组
-	jArgs := createArgsArray(method.Class().Loader(), args)
-	frame.LocalVars().SetRef(0, jArgs)
+	//jArgs := createArgsArray(method.Class().Loader(), args)
+	//frame.LocalVars().SetRef(0, jArgs)
 
 	defer catchErr(thread)
 	loop(thread, logInst)
