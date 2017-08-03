@@ -10,6 +10,9 @@ const jlSystem = "java/lang/System"
 
 func init() {
 	native.Register(jlSystem, "arraycopy", "(Ljava/lang/Object;ILjava/lang/Object;II)V", arraycopy)
+	//native.Register(jlSystem, "setIn0", "(Ljava/io/InputStream;)V", setIn0)
+	native.Register(jlSystem, "setOut0", "(Ljava/io/PrintStream;)V", setOut0)
+	//native.Register(jlSystem, "setErr0", "(Ljava/io/PrintStream;)V", setErr0)
 }
 
 func arraycopy(frame *chapter4_rtdt.Frame) {
@@ -42,6 +45,12 @@ func arraycopy(frame *chapter4_rtdt.Frame) {
 	}
 
 	heap.ArrayCopy(src, dest, srcPos, destPos, length)
+}
+
+func setOut0(frame *chapter4_rtdt.Frame) {
+	out := frame.LocalVars().GetRef(0)
+	sysClass := frame.Method().Class()
+	sysClass.SetRefVar("out", "Ljava/io/PrintStream;", out)
 }
 
 func checkArrayCopy(src, dest *heap.Object) bool {
