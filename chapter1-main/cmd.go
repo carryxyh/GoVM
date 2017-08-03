@@ -9,7 +9,6 @@ import (
 	"GoVM/chapter4-rtdt"
 	"GoVM/chapter6-obj/heap"
 	"strings"
-	"GoVM/chapter5-instructions"
 )
 
 type Cmd struct {
@@ -74,7 +73,7 @@ func startJVM(cmd *Cmd) {
 	mainClass := classLoader.LoadClass(className)
 	mainMethod := mainClass.GetMainMethod()
 	if mainMethod != nil {
-		chapter5_instructions.Interpret(mainMethod, cmd.verboseInstFlag, cmd.args)
+		//chapter5_instructions.Interpret(mainMethod, cmd.verboseInstFlag, cmd.args)
 	} else {
 		fmt.Printf("main method not found in class %v \n", className)
 	}
