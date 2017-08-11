@@ -11,6 +11,9 @@ func init() {
 	native.Register("sun/misc/VM", "initialize", "()V", initialize)
 }
 
+/**
+	初始化虚拟机相关部分
+ */
 func initialize(frame *chapter4_rtdt.Frame) {
 	vmClass := frame.Method().Class()
 	savedProps := vmClass.GetRefVar("savedProps", "Ljava/util/Properties;")

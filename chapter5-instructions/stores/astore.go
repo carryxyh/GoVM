@@ -8,6 +8,9 @@ import (
 	"GoVM/chapter4-rtdt"
 )
 
+/**
+	从操作数栈弹出引用放入到本地变量表中
+ */
 type ASTORE struct {
 	base.Index8Instruction
 }
