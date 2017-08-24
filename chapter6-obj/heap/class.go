@@ -5,29 +5,40 @@ import (
 	"strings"
 )
 
+/**
+	我们需要注意一下JVM中的class
+	我们这里的class，是运行时常量池里的class
+
+	我们的java.lang.Class 继承 java.lang.Object
+	java.lang.Object.class 又需要有一个 java.lang.Class（java.lang.Object.class 是存放在堆内存中的，相当于java.lang.Class的实例）
+	那么问题来了，是现有的java.lang.Object还是先有的java.lang.Class
+
+	这种问题，非常类似于spring解决set方式的循环依赖，都是通过在“混沌态”的时候解决问题。
+	JVM也是这样的，在这两个class在运行时常量池中还没完全初始化的时候，暴露出引用，来解决这个问题，这样我们就有了java世界里最最基础的两个class
+**/
 type Class struct {
 	//类访问标识符
-	accessFlags       uint16
+	accessFlags uint16
 	//thisClassName
-	name              string
-	superClassName    string
-	interfaceNames    []string
-	constantPool      *ConstantPool
-	fields            []*Field
-	methods           []*Method
-	loader            *ClassLoader
-	superClass        *Class
-	interfaces        []*Class
+	name           string
+	superClassName string
+	interfaceNames []string
+	constantPool   *ConstantPool
+	fields         []*Field
+	methods        []*Method
+	loader         *ClassLoader
+	superClass     *Class
+	interfaces     []*Class
 	//实例变量(及private String name)占据的空间大小
 	InstanceSlotCount uint
 	//类变量(及static类型的变量)占据的空间大小
-	staticSlotCount   uint
-	staticVars        Slots
+	staticSlotCount uint
+	staticVars      Slots
 	//类的 <clinit> 方法是否已经开始执行
-	initStarted       bool
+	initStarted bool
 	//与一个java中的java.lang.Class对应，而这个struct本身指的是虚拟机中的方法区中class的相关数据
-	jClass            *Object
-	sourceFile        string
+	jClass     *Object
+	sourceFile string
 }
 
 func newClass(cf *chapter3_cf.ClassFile) *Class {
@@ -51,29 +62,29 @@ func getSourceFile(cf *chapter3_cf.ClassFile) string {
 }
 
 func (self *Class) IsPublic() bool {
-	return 0 != self.accessFlags & ACC_PUBLIC
+	return 0 != self.accessFlags&ACC_PUBLIC
 }
 
 func (self *Class) IsFinal() bool {
-	return 0 != self.accessFlags & ACC_FINAL
+	return 0 != self.accessFlags&ACC_FINAL
 }
 func (self *Class) IsSuper() bool {
-	return 0 != self.accessFlags & ACC_SUPER
+	return 0 != self.accessFlags&ACC_SUPER
 }
 func (self *Class) IsInterface() bool {
-	return 0 != self.accessFlags & ACC_INTERFACE
+	return 0 != self.accessFlags&ACC_INTERFACE
 }
 func (self *Class) IsAbstract() bool {
-	return 0 != self.accessFlags & ACC_ABSTRACT
+	return 0 != self.accessFlags&ACC_ABSTRACT
 }
 func (self *Class) IsSynthetic() bool {
-	return 0 != self.accessFlags & ACC_SYNTHETIC
+	return 0 != self.accessFlags&ACC_SYNTHETIC
 }
 func (self *Class) IsAnnotation() bool {
-	return 0 != self.accessFlags & ACC_ANNOTATION
+	return 0 != self.accessFlags&ACC_ANNOTATION
 }
 func (self *Class) IsEnum() bool {
-	return 0 != self.accessFlags & ACC_ENUM
+	return 0 != self.accessFlags&ACC_ENUM
 }
 
 func (self *Class) StartInit() {
@@ -131,8 +142,8 @@ func (self *Class) ArrayClass() *Class {
 }
 
 /**
-	是否有权限访问
- */
+是否有权限访问
+*/
 func (self *Class) isAccessibleTo(other *Class) bool {
 	return self.IsPublic() || self.GetPackageName() == other.GetPackageName()
 }
@@ -143,8 +154,8 @@ func (self *Class) IsSuperClassOf(other *Class) bool {
 }
 
 /**
-	是否是基本类型
- */
+是否是基本类型
+*/
 func (self *Class) IsPrimitive() bool {
 	_, ok := primitiveTypes[self.name]
 	return ok
@@ -209,8 +220,8 @@ func (self *Class) SetRefVar(fieldName, fieldDescriptor string, ref *Object) {
 }
 
 /**
-	根据字段名、描述符以及是否是static来查找方法
- */
+根据字段名、描述符以及是否是static来查找方法
+*/
 func (self *Class) getField(name, descriptor string, isStatic bool) *Field {
 	for c := self; c != nil; c = c.superClass {
 		for _, field := range c.fields {
