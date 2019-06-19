@@ -1,8 +1,8 @@
 package references
 
 import (
-	"GoVM/chapter5-instructions/base"
 	"GoVM/chapter4-rtdt"
+	"GoVM/chapter5-instructions/base"
 	"GoVM/chapter6-obj/heap"
 	"fmt"
 )
@@ -11,6 +11,20 @@ type INVOKE_VIRTUAL struct {
 	base.Index16Instruction
 }
 
+/**
+	frame.Method()指的是当前的方法，要执行的方法应该用
+	toBeInvoked := heap.LookupMethodInClass(ref.Class(), methodRef.Name(), methodRef.Descriptor())
+	来获取。
+
+	举个例子：
+	void A() {
+		B();
+	}
+
+	这时候frame.Method()返回的是A，要执行B，这里会调用invokeVirtual指令
+	这时候要根据invokeVirtual的index找到运行时常量池中的methodRef
+	然后再执行，即heap.LookupMethodInClass(ref.Class(), methodRef.Name(), methodRef.Descriptor())会返回B
+**/
 func (self *INVOKE_VIRTUAL) Execute(frame *chapter4_rtdt.Frame) {
 	currentClass := frame.Method().Class()
 	cp := currentClass.ConstantPool()
